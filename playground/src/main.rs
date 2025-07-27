@@ -103,36 +103,14 @@ fn main() {
     // Important to write matrix * vertex -> Matrix operations produce different results depending on the order
     // out: defines a variable that is going to be passed along to the fragment shader
 
-    let vertex_shader_src = r#"
-    #version 140
-        
-    in vec2 position;
-    in vec3 color;
-    out vec3 vertex_color;
-
-    uniform mat4 matrix;
-
-    void main() {
-        //vertex_color = color; 
-        gl_Position = matrix * vec4(position, 0.0, 1.0);
-    }
-    "#;
-    let fragment_shader_src = r#"
-    #version 140
-
-    in vec3 vertex_color;
-    out vec4 color;
-
-    void main() {
-        color = vec4(1.0, 0.0, 0.0, 1.0);
-    }
-    "#;
+    let vertex_shader_src = read_to_string("playground/src/shaders/vertex_shader.glsl").unwrap_or("vertex shader failed to unwrap".to_owned());
+    let fragment_shader_src = read_to_string("playground/src/shaders/fragment_shader.glsl").unwrap_or("fragment shader failed to unwrap".to_owned());
 
     // send shader source code to glium
     let program = match glium::Program::from_source(
         &display, 
-        vertex_shader_src, 
-        fragment_shader_src, 
+        &vertex_shader_src, 
+        &fragment_shader_src, 
         None
     )  {
         Ok(program) => program,

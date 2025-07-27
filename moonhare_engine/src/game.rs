@@ -2,7 +2,7 @@ use std::sync::{Arc, Mutex};
 
 use glium::{glutin::surface::WindowSurface, winit::{application::ApplicationHandler, event::{Event, WindowEvent}, event_loop::{self, EventLoop, EventLoopBuilder}, window::{self, Window, WindowAttributes}}, Display};
 
-use crate::game_plugin::GamePlugin;
+use crate::{game_plugin::GamePlugin, ENGINE_NAME};
 
 pub struct Game {
     pub running: bool,
@@ -99,7 +99,8 @@ impl ApplicationHandler for Game {
             event_loop: &event_loop::ActiveEventLoop,
             window_id: window::WindowId,
             event: WindowEvent,
-        ) {    
+        ) {
+        let _ = window_id;    
         
         match event {
 
@@ -120,14 +121,6 @@ impl ApplicationHandler for Game {
 
 }
 
-
-fn init_event_loop() -> EventLoop<()> {
-    let event_loop = glium::winit::event_loop::EventLoop::builder()
-        .build()
-        .expect("event loop building");
-
-    return event_loop;
-}
 
 fn return_window(event_loop: &EventLoop<()>) -> (Window, Display<WindowSurface>) {
     let (_window, display) = glium::backend::glutin::SimpleWindowBuilder::new()
