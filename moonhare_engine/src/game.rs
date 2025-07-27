@@ -1,6 +1,6 @@
 use std::sync::{Arc, Mutex};
 
-use glium::{glutin::surface::WindowSurface, winit::{application::ApplicationHandler, event::{Event, WindowEvent}, event_loop::{self, EventLoop}, window::{self, Window, WindowAttributes}}, Display};
+use glium::{glutin::surface::WindowSurface, winit::{application::ApplicationHandler, event::{Event, WindowEvent}, event_loop::{self, EventLoop, EventLoopBuilder}, window::{self, Window, WindowAttributes}}, Display};
 
 use crate::game_plugin::GamePlugin;
 
@@ -9,7 +9,7 @@ pub struct Game {
     pub game_plugin: Option<Box<dyn GamePlugin>>,
     pub window: Option<Window>,
     pub display: Option<glium::Display<WindowSurface>>,
-    pub event_loop: EventLoop<()>
+    pub event_loop: Option<EventLoop<()>>
 }
 
 impl Game {
@@ -19,7 +19,7 @@ impl Game {
             game_plugin: None,
             window: None,
             display: None,
-            event_loop: init_event_loop(),
+            event_loop: None,
         }
     }
 
@@ -33,8 +33,9 @@ impl Game {
         } else {
             //todo!("Default Impl init")
         }
-        
-        let (_window, _display) = return_window(&self.event_loop);
+        self.event_loop = Some(EventLoop::builder().build().expect("event loop building"));
+
+        let (_window, _display) = return_window(&self.event_loop.as_ref().unwrap());
         self.window = Some(_window);
         self.display = Some(_display);
     }   
@@ -70,8 +71,6 @@ impl Game {
     }
 
     pub fn run(&mut self) {
-        self.init();
-
         while self.running {
             self.update();
             self.render();

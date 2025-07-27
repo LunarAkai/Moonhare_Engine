@@ -74,7 +74,7 @@ fn main() {
 
     let binding = Some(a.display.clone()).unwrap().unwrap();
     // todo: unwraps on none
-    let g = binding;
+    let display = binding;
 
     let shape = Vertex::define_shape(
     Vertex { position: [-0.5, -0.5], color: [1.0, 0.0, 0.0] },
@@ -86,7 +86,7 @@ fn main() {
     // "Upload" shape to the memory of the GPU (Vertex Buffer)
     // Isn't strictly necessary but, makes tge drawing operation faster
     
-    let vertex_buffer: VertexBuffer<Vertex> = VertexBuffer::new(&g, &shape).unwrap();
+    let vertex_buffer: VertexBuffer<Vertex> = VertexBuffer::new(&display, &shape).unwrap();
 
         
     // Complex shapes consist of hundreds/thousands of vertices -> need to have a list of vertices and tell OpenGL how to link these
@@ -103,16 +103,44 @@ fn main() {
     // Important to write matrix * vertex -> Matrix operations produce different results depending on the order
     // out: defines a variable that is going to be passed along to the fragment shader
 
-    let vertex_shader_src = read_to_string("playground/src/shaders/vertex_shader.glsl").unwrap();
-    let fragment_shader_src = read_to_string("playground/src/shaders/fragment_shader.glsl").unwrap();
+    let vertex_shader_src = r#"
+    #version 140
+        
+    in vec2 position;
+    in vec3 color;
+    out vec3 vertex_color;
+
+    uniform mat4 matrix;
+
+    void main() {
+        //vertex_color = color; 
+        gl_Position = matrix * vec4(position, 0.0, 1.0);
+    }
+    "#;
+    let fragment_shader_src = r#"
+    #version 140
+
+    in vec3 vertex_color;
+    out vec4 color;
+
+    void main() {
+        color = vec4(1.0, 0.0, 0.0, 1.0);
+    }
+    "#;
 
     // send shader source code to glium
-    let program = glium::Program::from_source(
-        &g, 
-        &vertex_shader_src, 
-        &fragment_shader_src, 
+    let program = match glium::Program::from_source(
+        &display, 
+        vertex_shader_src, 
+        fragment_shader_src, 
         None
-    ).unwrap();                    
+    )  {
+        Ok(program) => program,
+        Err(err) => {
+            eprintln!("Shader compilation error: {:?}", err);
+            panic!("Failed to compile shaders")
+        }
+    };               
 
 
     let pg_game = PlaygroundGame { 

@@ -8,13 +8,6 @@ pub struct Vertex {
 implement_vertex!(Vertex, position, color);
 
 impl Vertex {
-    pub fn new() -> Self {
-        Self { 
-            position: [0.0, 0.0], 
-            color: [0.0, 0.0, 0.0],
-        }
-    }
-
     pub fn define_shape(v1: Vertex, v2: Vertex, v3: Vertex) -> Vec<Vertex> {
         let shape = vec![
             v1,
