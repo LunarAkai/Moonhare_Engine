@@ -1,5 +1,6 @@
 use glium::Frame;
 
+
 pub trait GamePlugin {
     fn init(&mut self);
     fn update(&mut self);

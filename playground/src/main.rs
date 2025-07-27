@@ -1,5 +1,9 @@
+use std::cell::RefCell;
 use std::fs::read_to_string;
+use std::rc::Rc;
+use std::sync::{Arc, Mutex};
 
+use glium::glutin::surface::WindowSurface;
 use glium::{index::NoIndices, Frame, Program, VertexBuffer};
 use glium::{program, uniform, Display, Surface};
 use moonhare_engine::{game::Game, game_plugin::GamePlugin, vertex::Vertex};
@@ -63,7 +67,10 @@ impl GamePlugin for PlaygroundGame {
 
 fn main() {
 
-    let mut game: Game = Game::new();
+    let game = RefCell::new(Game::new());
+
+    let binding = game.borrow();
+    let g = binding.get_display();
 
     let shape = Vertex::define_shape(
     Vertex { position: [-0.5, -0.5], color: [1.0, 0.0, 0.0] },
@@ -73,7 +80,8 @@ fn main() {
 
     // "Upload" shape to the memory of the GPU (Vertex Buffer)
     // Isn't strictly necessary but, makes tge drawing operation faster
-    let vertex_buffer = glium::VertexBuffer::new(&display, &shape).unwrap();
+    
+    let vertex_buffer: VertexBuffer<Vertex> = VertexBuffer::new(g, &shape).unwrap();
 
         
     // Complex shapes consist of hundreds/thousands of vertices -> need to have a list of vertices and tell OpenGL how to link these
@@ -95,14 +103,14 @@ fn main() {
 
     // send shader source code to glium
     let program = glium::Program::from_source(
-        glium::Display::new(context, surface), 
+        g, 
         &vertex_shader_src, 
         &fragment_shader_src, 
         None
     ).unwrap();                    
 
 
-    let mut pg_game = PlaygroundGame { 
+    let pg_game = PlaygroundGame { 
         t: 0.0,
         shape: shape,
         vertex_buffer: vertex_buffer,
@@ -110,7 +118,8 @@ fn main() {
         program: program,
     };
 
-    game.register_plugin(Box::new(pg_game));
+    let mut a = game.borrow_mut();
+    a.register_plugin(Box::new(pg_game));
 
-    game.run();
+    a.run();
 }

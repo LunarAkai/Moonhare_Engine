@@ -1,6 +1,6 @@
 use std::sync::{Arc, Mutex};
 
-use glium::{glutin::surface::WindowSurface, winit::{application::ApplicationHandler, event::{Event, WindowEvent}, event_loop::{self, EventLoop}, window::{self, Window}}, Display};
+use glium::{glutin::surface::WindowSurface, winit::{application::ApplicationHandler, event::{Event, WindowEvent}, event_loop::{self, EventLoop}, window::{self, Window, WindowAttributes}}, Display};
 
 use crate::game_plugin::GamePlugin;
 
@@ -8,7 +8,7 @@ pub struct Game {
     running: bool,
     game_plugin: Option<Box<dyn GamePlugin>>,
     window: Option<Window>,
-    display: Arc<Mutex<Option<glium::Display<WindowSurface>>>>,
+    display: Option<glium::Display<WindowSurface>>,
     event_loop: EventLoop<()>
 }
 
@@ -18,7 +18,7 @@ impl Game {
             running: true,
             game_plugin: None,
             window: None,
-            display: Arc::new(Mutex::new(None)),
+            display: None,
             event_loop: init_event_loop(),
         }
     }
@@ -36,7 +36,7 @@ impl Game {
         
         let (_window, _display) = return_window(&self.event_loop);
         self.window = Some(_window);
-        self.display = Arc::new(Mutex::new(Some(_display)));
+        self.display = Some(_display);
     }   
 
     pub fn update(&mut self) {
@@ -48,7 +48,7 @@ impl Game {
     }
 
     pub fn render(&mut self) {
-        if let Some(ref display) = self.display.into() {
+        if let Some(ref display) = self.display{
             let mut target = display.draw();
 
             if let Some(ref mut game_plugin) = self.game_plugin {
@@ -78,6 +78,14 @@ impl Game {
         }
 
         self.cleanup();
+    }
+
+    pub fn get_display(&self) -> &glium::Display<WindowSurface>{
+        self.display.as_ref().unwrap()
+    }
+
+    pub fn get_window(self) -> Option<Window> {
+        return self.window;
     }
 }
 
