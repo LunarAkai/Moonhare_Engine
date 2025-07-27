@@ -57,6 +57,9 @@ impl GamePlugin for PlaygroundGame {
     fn cleanup(&mut self) {
         
     }
+    fn handle_events(&mut self) {
+        
+    }
 }
 
 

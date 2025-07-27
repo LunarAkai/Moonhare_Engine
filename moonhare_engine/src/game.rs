@@ -1,6 +1,6 @@
-use std::{ops::DerefMut, sync::Mutex};
+use std::{ops::{ControlFlow, DerefMut}, sync::Mutex};
 
-use glium::{glutin::surface::WindowSurface, winit::{self, event::WindowEvent, event_loop::{self, EventLoop}, window::Window}};
+use glium::{glutin::surface::WindowSurface, winit::{self, event::{self, WindowEvent}, event_loop::{self, EventLoop}, window::Window}};
 
 use crate::{game, game_plugin::GamePlugin, winit::winit_window::WinitWindow, ENGINE_NAME};
 
@@ -67,7 +67,6 @@ impl Game {
     pub fn run(&mut self) {
         while self.running {
             self.update();
-            self.handle_events( self);
             self.render();
         }
 
@@ -82,13 +81,17 @@ impl Game {
         self.window
     }
 
-    fn handle_events(self, game: &mut Game) {
-        let _ = Box::new(self.event_loop).run(move |event, window_target| {
+    pub fn handle_events(&mut self, event: winit::event::Event<()>) {
+        if let Some(ref mut game_plugin) = self.game_plugin {
+            game_plugin.handle_events();
+        }
         match event {
             glium::winit::event::Event::WindowEvent { event, .. } => match event {
-                glium::winit::event::WindowEvent::CloseRequested => window_target.exit(),
+                glium::winit::event::WindowEvent::CloseRequested => {
+                    
+                },
                 glium::winit::event::WindowEvent::Resized(window_size) => {
-                    game.get_display().resize(window_size.into());
+                   
                 },
                 glium::winit::event::WindowEvent::RedrawRequested => {
                     
@@ -100,7 +103,5 @@ impl Game {
             },
             _ => (),
         }
-    });
-
     }   
 }
