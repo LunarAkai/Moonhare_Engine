@@ -1,10 +1,7 @@
 pub mod vertex;
 pub mod game;
 pub mod game_plugin;
-
-use glium::{glutin::surface::WindowSurface, uniform, uniforms, winit::{event::{self, StartCause}, event_loop::{self, EventLoop, EventLoopBuilder}, window::{self, Window}}, Display, Surface};
-
-
+pub mod window;
 
 const ENGINE_NAME: &str = "Moonhare Engine";
 

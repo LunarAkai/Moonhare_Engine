@@ -1,20 +1,15 @@
-use std::cell::RefCell;
 use std::fs::read_to_string;
-use std::ops::Deref;
-use std::rc::Rc;
-use std::sync::{Arc, Mutex};
 
-use glium::glutin::surface::WindowSurface;
 use glium::{index::NoIndices, Frame, Program, VertexBuffer};
-use glium::{program, uniform, Display, Surface};
+use glium::{uniform, Surface};
 use moonhare_engine::{game::Game, game_plugin::GamePlugin, vertex::Vertex};
 
 struct PlaygroundGame {
     t: f32,
     shape: Vec<Vertex>, 
-    vertex_buffer: VertexBuffer<Vertex>,
-    indices: NoIndices,
-    program: Program,
+    vertex_buffer: Option<VertexBuffer<Vertex>>,
+    indices: Option<NoIndices>,
+    program: Option<Program>,
 }
 
 impl GamePlugin for PlaygroundGame {
@@ -52,9 +47,9 @@ impl GamePlugin for PlaygroundGame {
         };    
 
         target.draw(
-            &self.vertex_buffer, 
-            &self.indices, 
-            &self.program, 
+            self.vertex_buffer.as_ref().unwrap(), 
+            &self.indices.unwrap(), 
+            self.program.as_ref().unwrap(), 
             &uniforms,
             &Default::default()
         ).unwrap();
@@ -68,18 +63,18 @@ impl GamePlugin for PlaygroundGame {
 
 fn main() {
 
-    let game = RefCell::new(Game::new());
-    let mut a = game.borrow_mut();
-    a.init();
+    let mut game = Game::new();
+    game.register_plugin(Box::new(PlaygroundGame{ t: 0.0, shape: Default::default(), vertex_buffer: None, indices: None, program: None }));
+    game.init();
 
-    let binding = Some(a.display.clone()).unwrap().unwrap();
+    let binding = Some(game.display.clone()).unwrap();
     // todo: unwraps on none
     let display = binding;
 
     let shape = Vertex::define_shape(
     Vertex { position: [-0.5, -0.5], color: [1.0, 0.0, 0.0] },
     Vertex { position: [ 0.0,  0.5], color: [0.0, 1.0, 0.0] },
-    Vertex { position: [ 0.5, -0.25], color: [0.0, 0.0, 1.0] }
+    Vertex { position: [ 0.5, -0.5], color: [0.0, 0.0, 1.0] }
     );
 
 
@@ -124,13 +119,13 @@ fn main() {
     let pg_game = PlaygroundGame { 
         t: 0.0,
         shape: shape,
-        vertex_buffer: vertex_buffer,
-        indices: indices,
-        program: program,
+        vertex_buffer: Some(vertex_buffer),
+        indices: Some(indices),
+        program: Some(program),
     };
 
     //let mut a = game.borrow_mut();
-    a.register_plugin(Box::new(pg_game));
+    game.register_plugin(Box::new(pg_game));
 
-    a.run();
+    game.run();
 }
