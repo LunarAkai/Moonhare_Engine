@@ -1,7 +1,8 @@
 pub mod vertex;
 pub mod game;
 pub mod game_plugin;
-pub mod window;
+pub mod winit;
+pub mod logger;
 
 const ENGINE_NAME: &str = "Moonhare Engine";
 

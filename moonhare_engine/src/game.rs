@@ -1,6 +1,9 @@
-use glium::{backend::glutin::SimpleWindowBuilder, glutin::surface::WindowSurface, winit::{event_loop::EventLoop, window::Window}, Surface};
+use std::{ops::DerefMut, sync::Mutex};
 
-use crate::{game_plugin::GamePlugin, ENGINE_NAME};
+use glium::{glutin::surface::WindowSurface, winit::{self, event::WindowEvent, event_loop::{self, EventLoop}, window::Window}};
+
+use crate::{game, game_plugin::GamePlugin, winit::winit_window::WinitWindow, ENGINE_NAME};
+
 
 pub struct Game {
     pub running: bool,
@@ -12,8 +15,9 @@ pub struct Game {
 
 impl Game {
     pub fn new() -> Self {
-        let _event_loop = EventLoop::new().unwrap();
-        let _window = SimpleWindowBuilder::new().with_title(ENGINE_NAME).build(&_event_loop);
+        let _event_loop: EventLoop<()> = EventLoop::new().unwrap();
+
+        let _window = WinitWindow::construct_window(&_event_loop);
 
         Game { 
             running: true, 
@@ -29,6 +33,8 @@ impl Game {
     }
 
     pub fn init(&mut self) {
+        self.window.set_fullscreen(None);
+        self.window.set_decorations(true);
         if let Some(ref mut game_plugin) = self.game_plugin {
             game_plugin.init();
         } else {
@@ -61,6 +67,7 @@ impl Game {
     pub fn run(&mut self) {
         while self.running {
             self.update();
+            self.handle_events( self);
             self.render();
         }
 
@@ -74,50 +81,26 @@ impl Game {
     pub fn get_window(self) -> Window {
         self.window
     }
-}
 
-
-/* impl ApplicationHandler for Game {
-    fn resumed(&mut self, event_loop: &event_loop::ActiveEventLoop) {
-
-    }
-
-    fn window_event(
-            &mut self,
-            event_loop: &event_loop::ActiveEventLoop,
-            window_id: window::WindowId,
-            event: WindowEvent,
-        ) {
-        let _ = window_id;    
-        
-        
-
+    fn handle_events(self, game: &mut Game) {
+        let _ = Box::new(self.event_loop).run(move |event, window_target| {
         match event {
+            glium::winit::event::Event::WindowEvent { event, .. } => match event {
+                glium::winit::event::WindowEvent::CloseRequested => window_target.exit(),
+                glium::winit::event::WindowEvent::Resized(window_size) => {
+                    game.get_display().resize(window_size.into());
+                },
+                glium::winit::event::WindowEvent::RedrawRequested => {
+                    
+                },
+                _ => (),
+            }
+            glium::winit::event::Event::AboutToWait => {
 
-            WindowEvent::CloseRequested => {
-                event_loop.exit();
-            },
-            WindowEvent::Resized(window_size) => {
-                if let Some(window) = &self.window {
-                    if let Some(display) = &self.display {
-                        display.resize(window_size.into());
-                    }                    
-                } 
-            },
-
-            WindowEvent::RedrawRequested => { 
-                if let Some(window) = &self.window {
-                    window.request_redraw();
-                }
             },
             _ => (),
         }
+    });
 
-    }
-    fn about_to_wait(&mut self, _: &event_loop::ActiveEventLoop) {
-        if let Some(window) = &self.window {
-            window.request_redraw();
-        }
-    }
-
-} */
+    }   
+}
