@@ -5,11 +5,11 @@ use glium::{glutin::surface::WindowSurface, winit::{application::ApplicationHand
 use crate::game_plugin::GamePlugin;
 
 pub struct Game {
-    running: bool,
-    game_plugin: Option<Box<dyn GamePlugin>>,
-    window: Option<Window>,
-    display: Option<glium::Display<WindowSurface>>,
-    event_loop: EventLoop<()>
+    pub running: bool,
+    pub game_plugin: Option<Box<dyn GamePlugin>>,
+    pub window: Option<Window>,
+    pub display: Option<glium::Display<WindowSurface>>,
+    pub event_loop: EventLoop<()>
 }
 
 impl Game {
@@ -31,7 +31,7 @@ impl Game {
         if let Some(ref mut game_plugin) = self.game_plugin {
             game_plugin.init();
         } else {
-            todo!("Default Impl init")
+            //todo!("Default Impl init")
         }
         
         let (_window, _display) = return_window(&self.event_loop);
@@ -43,7 +43,7 @@ impl Game {
         if let Some(ref mut game_plugin) = self.game_plugin {
             game_plugin.update();
         } else {
-            todo!("Default Impl update")
+            //todo!("Default Impl update")
         }
     }
 
@@ -54,10 +54,10 @@ impl Game {
             if let Some(ref mut game_plugin) = self.game_plugin {
                 game_plugin.render(&mut target);
             } else {
-                todo!("Default Impl render")
+                //todo!("Default Impl render")
             }
-
-            target.finish().unwrap();
+            
+            let _ = &target.finish().unwrap();
         }    
     }
 
@@ -65,7 +65,7 @@ impl Game {
         if let Some(ref mut game_plugin) = self.game_plugin {
             game_plugin.cleanup();
         } else {
-            todo!("Default Impl cleanup")
+            //todo!("Default Impl cleanup")
         }
     }
 
@@ -88,6 +88,7 @@ impl Game {
         return self.window;
     }
 }
+
 
 impl ApplicationHandler for Game {
     fn resumed(&mut self, event_loop: &event_loop::ActiveEventLoop) {
@@ -119,6 +120,7 @@ impl ApplicationHandler for Game {
         }
 
 }
+
 
 fn init_event_loop() -> EventLoop<()> {
     let event_loop = glium::winit::event_loop::EventLoop::builder()
