@@ -8,8 +8,8 @@ Game Engine written in Rust
 
 ### Classes/Structs
 #### Core
-- [Core/Game](/docs/structs/core/Game.md)
-- [Core/GameTime](/docs/structs/core/GameTime.md)
+- [Core/Game](docs/structs/core/Game.md)
+- [Core/GameTime](docs/structs/core/GameTime.md)
 
 #### Graphics
 - 
@@ -21,7 +21,7 @@ Game Engine written in Rust
 -
 
 #### Window
-- [Window/GameWindow](/docs/structs/window/GameWindow.md)
+- [Window/GameWindow](docs/structs/window/GameWindow.md)
 
 ### Modules
 - core
