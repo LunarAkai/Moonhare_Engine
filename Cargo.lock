@@ -691,6 +691,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "moonhare_event"
+version = "0.1.0"
+
+[[package]]
 name = "moonhare_graphics"
 version = "0.1.0"
 
@@ -702,6 +706,10 @@ dependencies = [
  "humantime",
  "log",
 ]
+
+[[package]]
+name = "moonhare_window"
+version = "0.1.0"
 
 [[package]]
 name = "ndk"

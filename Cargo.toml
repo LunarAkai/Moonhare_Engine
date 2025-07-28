@@ -1,8 +1,10 @@
 [workspace]
 resolver = "3"
 members = [
-    "moonhare_engine", 
-    "moonhare_graphics", "moonhare_log", 
+    "moonhare_engine", "moonhare_event", 
+    "moonhare_graphics", 
+    "moonhare_log", 
+    "moonhare_window", 
     "playground"
 ]
 
