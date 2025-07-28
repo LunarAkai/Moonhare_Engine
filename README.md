@@ -11,6 +11,12 @@ Game Engine written in Rust
 - [Core/Game](docs/structs/core/Game.md)
 - [Core/GameTime](docs/structs/core/GameTime.md)
 
+#### Debug
+-
+
+#### ECS
+-
+
 #### Graphics
 - 
 
@@ -25,6 +31,8 @@ Game Engine written in Rust
 
 ### Modules
 - core
+- debug
+- ecs
 - graphics
 - logger
 - math
