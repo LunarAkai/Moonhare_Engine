@@ -1,10 +1,11 @@
 pub mod vertex;
-pub mod game;
+pub mod core;
 pub mod game_plugin;
-pub mod winit;
+pub mod window;
 pub mod logger;
 
 const ENGINE_NAME: &str = "Moonhare Engine";
+
 
 pub struct CPointer<T>(T);
 

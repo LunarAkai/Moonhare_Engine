@@ -2,7 +2,7 @@ use std::{ops::{ControlFlow, DerefMut}, sync::Mutex};
 
 use glium::{glutin::surface::WindowSurface, winit::{self, event::{self, WindowEvent}, event_loop::{self, EventLoop}, window::Window}};
 
-use crate::{game, game_plugin::GamePlugin, winit::winit_window::WinitWindow, ENGINE_NAME};
+use crate::{game_plugin::GamePlugin, window::winit_window::WinitWindow, ENGINE_NAME};
 
 
 pub struct Game {

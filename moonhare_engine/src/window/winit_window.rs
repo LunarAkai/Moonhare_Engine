@@ -1,7 +1,7 @@
 
 use glium::{backend::glutin::SimpleWindowBuilder, glutin::{display::GetGlDisplay, surface::WindowSurface}, winit::{self, dpi::LogicalSize, event_loop::{ActiveEventLoop, EventLoop}, raw_window_handle::HasDisplayHandle, window::{Window, WindowAttributes}}, Display};
 
-use crate::winit::window_config::WindowConfig;
+use crate::window::window_config::WindowConfig;
 
 use crate::ENGINE_NAME;
 

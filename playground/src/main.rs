@@ -2,7 +2,7 @@ use std::fs::read_to_string;
 
 use glium::{index::NoIndices, Frame, Program, VertexBuffer};
 use glium::{uniform, Surface};
-use moonhare_engine::{game::Game, game_plugin::GamePlugin, vertex::Vertex};
+use moonhare_engine::{core::game::Game, game_plugin::GamePlugin, vertex::Vertex};
 
 struct PlaygroundGame {
     t: f32,
