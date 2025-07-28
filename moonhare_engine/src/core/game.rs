@@ -1,30 +1,28 @@
 use std::{ops::{ControlFlow, DerefMut}, sync::Mutex};
 
-use glium::{glutin::surface::WindowSurface, winit::{self, event::{self, WindowEvent}, event_loop::{self, EventLoop}, window::Window}};
+use glium::{glutin::{api::egl::surface::Surface, surface::WindowSurface}, winit::{self, event::{self, WindowEvent}, event_loop::{self, EventLoop}, window::Window}, Display};
+use winit::application::ApplicationHandler;
 
-use crate::{game_plugin::GamePlugin, window::winit_window::WinitWindow, ENGINE_NAME};
+use crate::{core::game, game_plugin::GamePlugin, window::winit_window::WinitWindow, ENGINE_NAME};
 
 
 pub struct Game {
     pub running: bool,
     pub game_plugin: Option<Box<dyn GamePlugin>>,
-    pub window: Window,
-    pub display: glium::Display<WindowSurface>,
-    pub event_loop: EventLoop<()>
+    pub window: WinitWindow,
 }
 
 impl Game {
     pub fn new() -> Self {
         let _event_loop: EventLoop<()> = EventLoop::new().unwrap();
 
-        let _window = WinitWindow::construct_window(&_event_loop);
+        let mut game_window = WinitWindow::default();
+        _event_loop.run_app(&mut game_window);
 
         Game { 
             running: true, 
             game_plugin: None, 
-            window: _window.0, 
-            display: _window.1, 
-            event_loop: _event_loop, 
+            window: game_window,
         }
     }
 
@@ -33,8 +31,6 @@ impl Game {
     }
 
     pub fn init(&mut self) {
-        self.window.set_fullscreen(None);
-        self.window.set_decorations(true);
         if let Some(ref mut game_plugin) = self.game_plugin {
             game_plugin.init();
         } else {
@@ -49,13 +45,13 @@ impl Game {
     }
 
     pub fn render(&mut self) {
-        let mut target = self.display.draw();
+        //let mut target = display.draw();
 
-        if let Some(ref mut game_plugin) = self.game_plugin {
-            game_plugin.render(&mut target);
-        }
+        //if let Some(ref mut game_plugin) = self.game_plugin {
+        //    game_plugin.render(&mut target);
+        //}
             
-        target.finish().unwrap();   
+        //target.finish().unwrap();   
     }
 
     pub fn cleanup(&mut self) {
@@ -72,36 +68,4 @@ impl Game {
 
         self.cleanup();
     }
-
-    pub fn get_display(&self) -> &glium::Display<WindowSurface>{
-        &self.display
-    }
-
-    pub fn get_window(self) -> Window {
-        self.window
-    }
-
-    pub fn handle_events(&mut self, event: winit::event::Event<()>) {
-        if let Some(ref mut game_plugin) = self.game_plugin {
-            game_plugin.handle_events();
-        }
-        match event {
-            glium::winit::event::Event::WindowEvent { event, .. } => match event {
-                glium::winit::event::WindowEvent::CloseRequested => {
-                    
-                },
-                glium::winit::event::WindowEvent::Resized(window_size) => {
-                   
-                },
-                glium::winit::event::WindowEvent::RedrawRequested => {
-                    
-                },
-                _ => (),
-            }
-            glium::winit::event::Event::AboutToWait => {
-
-            },
-            _ => (),
-        }
-    }   
 }

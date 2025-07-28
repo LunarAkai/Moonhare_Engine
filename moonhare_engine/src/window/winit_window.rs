@@ -1,15 +1,19 @@
 
-use glium::{backend::glutin::SimpleWindowBuilder, glutin::{display::GetGlDisplay, surface::WindowSurface}, winit::{self, dpi::LogicalSize, event_loop::{ActiveEventLoop, EventLoop}, raw_window_handle::HasDisplayHandle, window::{Window, WindowAttributes}}, Display};
+use glium::{backend::{glutin::SimpleWindowBuilder, Context}, glutin::{display::GetGlDisplay, prelude::GlContext, surface::WindowSurface}, winit::{self, dpi::LogicalSize, event_loop::{ActiveEventLoop, EventLoop}, raw_window_handle::HasDisplayHandle, window::{Window, WindowAttributes}}, Display};
+use winit::application::ApplicationHandler;
 
 use crate::window::window_config::WindowConfig;
 
 use crate::ENGINE_NAME;
 
-pub struct WinitWindow {}
+#[derive(Default)]
+pub struct WinitWindow {
+    pub window: Option<Window>,
+}
 
-impl WinitWindow {
-    /// constructs a new winit window
-    pub fn construct_window(event_loop: &EventLoop<()>) -> (Window, Display<WindowSurface>) {
+
+impl ApplicationHandler for WinitWindow {
+    fn resumed(&mut self, event_loop: &ActiveEventLoop) {
         let config = WindowConfig::default();
         
         let mut window_attributes = WindowAttributes::default();
@@ -25,8 +29,18 @@ impl WinitWindow {
         window_attributes = window_attributes.with_visible(true);
 
         window_attributes = winit::platform::wayland::WindowAttributesExtWayland::with_name(window_attributes, ENGINE_NAME, "");
-        
-        SimpleWindowBuilder::new().set_window_builder(window_attributes).build(event_loop)
+
+
+        self.window = Some(event_loop.create_window(window_attributes).unwrap());
+    }
+
+    fn window_event(
+        &mut self,
+        event_loop: &ActiveEventLoop,
+        window_id: winit::window::WindowId,
+        event: winit::event::WindowEvent,
+    ) {
+        todo!()
     }
 }
 

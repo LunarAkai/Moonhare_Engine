@@ -1,0 +1,10 @@
+[package]
+name = "moonhare_log"
+edition = "2024"
+version.workspace = true
+authors.workspace = true
+
+[dependencies]
+log = "*"
+fern = { version = "0.7", features = ["colored"] }
+humantime = "*"

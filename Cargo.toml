@@ -2,6 +2,7 @@
 resolver = "3"
 members = [
     "moonhare_engine", 
+    "moonhare_graphics", "moonhare_log", 
     "playground"
 ]
 

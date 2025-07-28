@@ -5,3 +5,6 @@ edition = "2024"
 
 [dependencies]
 glium = "0.36.0"
+log = "0.4"
+fern = "0.7"
+winit = "0.30.12"

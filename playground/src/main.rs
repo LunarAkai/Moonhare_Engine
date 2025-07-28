@@ -3,6 +3,7 @@ use std::fs::read_to_string;
 use glium::{index::NoIndices, Frame, Program, VertexBuffer};
 use glium::{uniform, Surface};
 use moonhare_engine::{core::game::Game, game_plugin::GamePlugin, vertex::Vertex};
+use moonhare_log::{mh_debug, mh_error, mh_info, mh_trace, mh_warn};
 
 struct PlaygroundGame {
     t: f32,
@@ -65,7 +66,14 @@ impl GamePlugin for PlaygroundGame {
 
 
 fn main() {
-
+    let _ = moonhare_log::configere_logger();
+    mh_info("Blub");
+    mh_debug("blub");
+    mh_warn("blug");
+    mh_trace("trace");
+    mh_error("error");
+    println!("Blaa");
+/* 
     let mut game = Game::new();
     game.register_plugin(Box::new(PlaygroundGame{ t: 0.0, shape: Default::default(), vertex_buffer: None, indices: None, program: None }));
     game.init();
@@ -131,4 +139,6 @@ fn main() {
     game.register_plugin(Box::new(pg_game));
 
     game.run();
+
+*/
 }
