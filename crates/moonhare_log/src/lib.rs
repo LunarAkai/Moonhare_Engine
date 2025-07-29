@@ -63,23 +63,23 @@ pub fn configere_logger() -> Result<(), fern::InitError>{
     Ok(())
 }
 
-pub fn mh_info<T: Display>(arg: T) {
+pub fn info<T: Display>(arg: T) {
     log::info!("{}", arg);
 }
 
-pub fn mh_warn<T: Display>(arg: T) {
+pub fn warn<T: Display>(arg: T) {
     log::warn!("{}", arg);
 }
 
-pub fn mh_debug<T: Display>(arg: T) {
+pub fn debug<T: Display>(arg: T) {
     log::debug!("{}", arg);
 }
 
-pub fn mh_trace<T: Display>(arg: T) {
+pub fn trace<T: Display>(arg: T) {
     log::trace!("{}", arg);
 }
 
-pub fn mh_error<T: Display>(arg: T) {
+pub fn error<T: Display>(arg: T) {
     log::error!("{}", arg);
 }
 

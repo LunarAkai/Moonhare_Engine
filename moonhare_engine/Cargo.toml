@@ -4,7 +4,5 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-glium = "0.36.0"
-log = "0.4"
-fern = "0.7"
-winit = "0.30.12"
+moonhare_internal = { path = "../crates/moonhare_internal" }
+

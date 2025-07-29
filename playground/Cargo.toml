@@ -5,5 +5,3 @@ edition = "2024"
 
 [dependencies]
 moonhare_engine = { path = "../moonhare_engine" }
-moonhare_log = { path = "../moonhare_log" }
-glium = "0.36.0"
