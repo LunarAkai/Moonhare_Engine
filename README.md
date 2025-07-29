@@ -15,10 +15,10 @@ Game Engine written in Rust
 
 ### Crates
 - [MoonhareEngine](moonhare_engine/)
-- [MoonhareEvent](moonhare_event/)
-- [MoonhareGraphics](moonhare_graphics/)
-- [MoonhareLog](moonhare_log/)
-- [MoonhareWindow](moonhare_window/)
+- [MoonhareEvent](crates/moonhare_event/)
+- [MoonhareGraphics](crates/moonhare_graphics/)
+- [MoonhareLog](crates/moonhare_log/)
+- [MoonhareWindow](crates/moonhare_window/)
 
 
 ### Game Loop:
@@ -27,6 +27,7 @@ Game Engine written in Rust
 - (enter loop) ... -> Update -> Render -> Update ...   
 
 - Cleanup   
+
 
 
 
