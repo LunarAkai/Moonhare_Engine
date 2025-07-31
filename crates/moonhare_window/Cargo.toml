@@ -6,3 +6,4 @@ authors.workspace = true
 
 [dependencies]
 winit = "0.30.12"
+moonhare_log = { path = "../moonhare_log" }

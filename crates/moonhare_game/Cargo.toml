@@ -5,3 +5,5 @@ version.workspace = true
 authors.workspace = true
 
 [dependencies]
+moonhare_log = { path = "../moonhare_log" }
+moonhare_window = { path = "../moonhare_window" }

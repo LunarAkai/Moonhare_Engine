@@ -509,6 +509,10 @@ version = "0.1.0"
 [[package]]
 name = "moonhare_game"
 version = "0.1.0"
+dependencies = [
+ "moonhare_log",
+ "moonhare_window",
+]
 
 [[package]]
 name = "moonhare_graphics"
@@ -538,6 +542,7 @@ dependencies = [
 name = "moonhare_window"
 version = "0.1.0"
 dependencies = [
+ "moonhare_log",
  "winit",
 ]
 

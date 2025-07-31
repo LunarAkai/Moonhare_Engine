@@ -1,4 +1,5 @@
 /// General Config for [`WinitWindow`](crate::winit::winit_window::WinitWindow)
+#[derive(Debug)]
 pub struct WindowConfig {
     pub title: String,
     pub width: u32,

@@ -1,14 +1,16 @@
-use winit::{application::ApplicationHandler, dpi::LogicalSize, event::WindowEvent, event_loop::ActiveEventLoop, window::{Window, WindowAttributes}};
+use winit::{application::ApplicationHandler, dpi::LogicalSize, event::WindowEvent, event_loop::{self, ActiveEventLoop, EventLoop}, window::{Window, WindowAttributes}};
 
 use crate::window_config::WindowConfig;
 
-#[derive(Default)]
+#[derive(Debug)]
 pub struct WinitWindow {
-    pub window: Option<Window>,
+    pub window: Window,
 }
 
 impl WinitWindow {
-    pub fn create_window(&mut self, event_loop: &ActiveEventLoop, config: WindowConfig) -> WinitWindow {
+    pub fn new(config: WindowConfig) -> Self {
+        moonhare_log::trace("Im inside the create window function in winit");
+        let event_loop = EventLoop::new().unwrap();
         let mut window_attributes = WindowAttributes::default()
             .with_title(config.title);
 
@@ -20,9 +22,17 @@ impl WinitWindow {
         window_attributes = window_attributes.with_visible(config.visble);
         window_attributes = window_attributes.with_decorations(config.decorations);
 
-        let window = event_loop.create_window(window_attributes).unwrap();
+        let window = match event_loop.create_window(window_attributes) {
+            Ok(window) => window,
+            Err(err) => {
+                moonhare_log::error("Error creating window: {err}");
+                return;
+            },
+        };
 
-        Self { window: Some(window) }
+        moonhare_log::info(format!("Winit WIndow: {:?}", window));
+
+        Self { window: window }
     }
 }
 
