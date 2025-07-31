@@ -1,2 +1,3 @@
 /target
 *.log
+push_to_git.sh
