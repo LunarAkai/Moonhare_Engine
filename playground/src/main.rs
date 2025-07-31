@@ -1,4 +1,5 @@
-use moonhare_engine::{event, log::{self}, window::{self, winit_window::WinitWindow}};
+use moonhare_engine::log::{self};
+
 
 fn main() {
     let _ = log::configere_logger();

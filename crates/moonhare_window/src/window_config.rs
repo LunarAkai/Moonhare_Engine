@@ -1,5 +1,3 @@
-use std::{any::Any, string};
-
 /// General Config for [`WinitWindow`](crate::winit::winit_window::WinitWindow)
 pub struct WindowConfig {
     pub title: String,

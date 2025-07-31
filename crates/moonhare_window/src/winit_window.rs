@@ -1,6 +1,4 @@
-use std::error::Error;
-
-use winit::{application::ApplicationHandler, dpi::LogicalSize, event::WindowEvent, event_loop::{ActiveEventLoop, EventLoop}, window::{Window, WindowAttributes, WindowId}};
+use winit::{application::ApplicationHandler, dpi::LogicalSize, event::WindowEvent, event_loop::ActiveEventLoop, window::{Window, WindowAttributes}};
 
 use crate::window_config::WindowConfig;
 

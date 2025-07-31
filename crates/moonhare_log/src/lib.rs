@@ -1,5 +1,4 @@
-/// Wrapper around `log` and `fern` crates
-/// 
+//! Wrapper around `log` and `fern` crates
 use std::{fmt::Display, io, time::SystemTime};
 
 /// Configures the Log Output Settings
