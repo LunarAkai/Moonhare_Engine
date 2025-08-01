@@ -1,4 +1,4 @@
-use moonhare_window::{window_config, winit_window::{self, WinitWindow}};
+use moonhare_window::{window_config, MoonhareWindow};
 
 use crate::{basic::node::Node, Game};
 
@@ -9,7 +9,7 @@ pub struct GameWindow {
     pub height: u32,
     pub visble: bool,
     pub decorations: bool,
-    pub winit_window: Option<WinitWindow>,
+    pub winit_window: Option<MoonhareWindow>,
 }
               
 impl Node for GameWindow {
@@ -39,9 +39,10 @@ impl GameWindow {
         window_config.visble = window.visble;
         window_config.decorations = window.decorations;
         
-        let winit = winit_window::WinitWindow::new(window_config);
+        let _w = moonhare_window::MoonhareWindow::define_context(moonhare_window::WindowRenderContext::OPENGL);
+        _w.create_window_from_context();
         
-        window.winit_window = Some(winit);
+        window.winit_window = Some(_w);
         // todo: tell winit to create a window for us 
         moonhare_log::info(format!("created window {:?}", window));
         window
