@@ -1,35 +1,47 @@
 //! Provides functionality to create either a vulkan or opengl window
 
-use crate::opengl_window::create_open_gl_window;
+use std::marker;
+
 pub mod window_config;
-pub mod opengl_window;
+
+pub mod platforms;
 
 #[derive(Debug, Clone, Copy)]
 pub enum WindowRenderContext {
     VULKAN, // TODO
     OPENGL,
+    OPENGLGTK,
 }
 
-#[derive(Debug, Clone, Copy)]
-pub struct MoonhareWindow {
-    render_context: WindowRenderContext
+pub trait WindowResult {
 }
 
-impl MoonhareWindow {
-    pub fn define_context(context: WindowRenderContext) -> Self {
-        Self {
-            render_context: context
-        }
+pub trait MoonhareWindow {
+    type WindowResult;
+    fn init() -> Self::WindowResult;
+    fn on_update();
+    fn shutdown();
+}
+
+pub struct Window {
+
+}
+
+impl Window {
+    /// creates a gtk4 window
+    #[cfg(target_os = "linux")]
+    pub fn create() {
+        use gtk4::gio::prelude::ApplicationExtManual;
+
+        use crate::platforms::gtk_window::GTKWindow;
+
+        let application = GTKWindow::init();
+        
+        application.get_application().run();
     }
 
-    pub fn create_window_from_context(self) {
-        match self.render_context {
-            WindowRenderContext::VULKAN => {
-                todo!("Vulkan not implemented yet")
-            },
-            WindowRenderContext::OPENGL => {
-                create_open_gl_window();
-            }
-        }
+    #[cfg(not(target_os = "linux"))]
+    pub fn create() {
+        todo!("moonhare engine only supports linux for now")
     }
 }

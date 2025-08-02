@@ -3,7 +3,8 @@ use std::{fmt::Display, io, time::SystemTime};
 
 /// Configures the Log Output Settings
 pub fn configere_logger() -> Result<(), fern::InitError>{
-    let base_config = fern::Dispatch::new();
+    let base_config = fern::Dispatch::new().level(log::LevelFilter::Info);
+
 
     // configure colors for the whole line
     let colors_line = fern::colors::ColoredLevelConfig::new()

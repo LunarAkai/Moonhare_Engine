@@ -16,9 +16,13 @@ Game Engine written in Rust
 ### Crates
 - [MoonhareEngine](moonhare_engine/)
 - [MoonhareEvent](crates/moonhare_event/)
+- [MoonhareGame](crates/moonhare_game/)
+    - core Engine functionality
 - [MoonhareGraphics](crates/moonhare_graphics/)
 - [MoonhareLog](crates/moonhare_log/)
+    - Wrapper around the Log and fern crates
 - [MoonhareWindow](crates/moonhare_window/)
+    - deals with OpenGL/Vulkan Window creation
 
 
 ### Game Loop:
