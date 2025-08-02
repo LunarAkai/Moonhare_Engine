@@ -1,8 +1,6 @@
-use std::marker::PhantomData;
+use gtk4::{gio::prelude::ApplicationExt, prelude::{GtkWindowExt, WidgetExt}, Application, ApplicationWindow};
 
-use gtk4::{gio::prelude::{ApplicationExt, ApplicationExtManual}, glib::object::ObjectExt, prelude::{GtkWindowExt, WidgetExt}, subclass::prelude::GtkApplicationImpl, Application, ApplicationWindow};
-
-use crate::{MoonhareWindow, WindowResult};
+use crate::{window_config, MoonhareWindow};
 
 #[derive(Debug)]
 pub struct GTKWindow {
@@ -18,11 +16,12 @@ impl GTKWindow {
 
     fn build_ui(application: &Application) {
         let window = ApplicationWindow::new(application);
-        window.set_title(Some("Moonhare Engine GTK"));
-        window.set_default_size(1280, 720);
+        let window_config = window_config::WindowConfig::default();
+        window.set_title(Some(format!("{} GTK", window_config.title).as_str()));
+        window.set_default_size(window_config.width as i32, window_config.height as i32);
+        window.set_visible(window_config.visble);
 
         window.show();
-
     }
 }
 

@@ -34,6 +34,7 @@ impl Game {
     pub fn add_window(&mut self) {
         moonhare_log::info(format!("Adding window to {:?}", self));
         Window::create();
+        
     }
 }
 
