@@ -1,12 +1,5 @@
 //! Provides functionality to create either a vulkan or opengl window
-
-use std::marker;
-
-#[cfg(target_os = "linux")]
-use crate::platforms::gtk_window::GTKWindow;
-
 pub mod window_config;
-
 pub mod platforms;
 
 #[derive(Debug, Clone, Copy)]
@@ -30,7 +23,8 @@ pub struct Window {
 
 
 impl Window {
-    /// creates a gtk4 window
+    /// creates a gtk4 window while spaning a new thread that the window runs on.
+    /// here: gtk sends engine events when _things happen_ with the window that other engine parts can interact with
     #[cfg(target_os = "linux")]
     pub fn create(context: WindowRenderContext) {
         match context {
@@ -51,7 +45,6 @@ impl Window {
                 });
             },
         }
-
     }
 
     #[cfg(not(target_os = "linux"))]

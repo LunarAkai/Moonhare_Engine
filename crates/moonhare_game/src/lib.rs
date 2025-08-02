@@ -8,6 +8,7 @@ pub mod basic;
 /// Only one Game may exist per project
 #[derive(Debug)]
 pub struct Game {
+    pub is_running: bool,
     pub name: String,
     pub context: WindowRenderContext,
 }
@@ -15,6 +16,7 @@ pub struct Game {
 impl Default for Game {
     fn default() -> Self {
         Self { 
+            is_running: true,
             name: default_game_name(),
             context: WindowRenderContext::OPENGLGTK
         }
@@ -28,7 +30,7 @@ impl Game {
 
     pub fn run(&self) {
         info("Running Game...");
-        loop {
+        while self.is_running {
             
         }
     }

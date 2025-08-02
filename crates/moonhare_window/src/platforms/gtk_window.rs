@@ -1,4 +1,5 @@
-use gtk4::{gio::prelude::ApplicationExt, glib, prelude::{GtkWindowExt, WidgetExt}, Application, ApplicationWindow};
+use gtk4::{gio::{prelude::{ActionMapExtManual, ApplicationExt}, ActionEntry}, glib, prelude::{GtkWindowExt, WidgetExt}, Application, ApplicationWindow};
+use moonhare_event::{event::Event, events::window_events::window_close_event::WindowCloseEvent};
 
 use crate::{window_config, MoonhareWindow};
 
@@ -21,8 +22,20 @@ impl GTKWindow {
         window.set_default_size(window_config.width as i32, window_config.height as i32);
         window.set_visible(window_config.visble);
 
+        // Add action "close" to `window` taking no parameter
+        let action_close = ActionEntry::builder("close")
+            .activate(|window: &ApplicationWindow, _, _| {
+                GTKWindow::shutdown();
+                window.close();
+            })
+            .build();
+
+        window.add_action_entries([action_close]);
+
         window.show();
     }
+
+    
 }
 
 impl MoonhareWindow for GTKWindow {  
@@ -43,6 +56,8 @@ impl MoonhareWindow for GTKWindow {
     }
 
     fn shutdown() {
+        // todo: emit WindowCloseEvent
+        
     }
 }
 

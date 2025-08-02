@@ -6,4 +6,5 @@ authors.workspace = true
 
 [dependencies]
 moonhare_log = { path = "../moonhare_log" }
+moonhare_event = { path = "../moonhare_event" }
 gtk4 = "*"

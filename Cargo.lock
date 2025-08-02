@@ -503,6 +503,7 @@ name = "moonhare_window"
 version = "0.1.0"
 dependencies = [
  "gtk4",
+ "moonhare_event",
  "moonhare_log",
 ]
 

@@ -9,4 +9,8 @@ pub enum EventType {
 pub trait Event {
     fn get_event_name() -> &'static str;
     fn get_event_type() -> EventType;
+
+    /// Emits the Event
+    fn emit();
 }
+
