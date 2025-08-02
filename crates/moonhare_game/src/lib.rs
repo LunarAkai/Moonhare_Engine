@@ -1,7 +1,7 @@
 //! Base functionality for a Moonhare Game Engine Project
 
 use moonhare_log::*;
-use moonhare_window::Window;
+use moonhare_window::{Window, WindowRenderContext};
 
 pub mod basic;
 
@@ -9,12 +9,14 @@ pub mod basic;
 #[derive(Debug)]
 pub struct Game {
     pub name: String,
+    pub context: WindowRenderContext,
 }
 
 impl Default for Game {
     fn default() -> Self {
         Self { 
             name: default_game_name(),
+            context: WindowRenderContext::OPENGLGTK
         }
     }
 }
@@ -33,8 +35,7 @@ impl Game {
 
     pub fn add_window(&mut self) {
         moonhare_log::info(format!("Adding window to {:?}", self));
-        Window::create();
-        
+        Window::create(self.context);
     }
 }
 

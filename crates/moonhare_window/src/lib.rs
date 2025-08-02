@@ -11,8 +11,7 @@ pub mod platforms;
 
 #[derive(Debug, Clone, Copy)]
 pub enum WindowRenderContext {
-    VULKAN, // TODO
-    OPENGL,
+    VULKANGTK, // TODO
     OPENGLGTK,
 }
 
@@ -33,18 +32,26 @@ pub struct Window {
 impl Window {
     /// creates a gtk4 window
     #[cfg(target_os = "linux")]
-    pub fn create() {
-        use std::thread;
+    pub fn create(context: WindowRenderContext) {
+        match context {
+            WindowRenderContext::VULKANGTK => {
+                todo!()
+            },
+            WindowRenderContext::OPENGLGTK => {
+                use std::thread;
 
-        use gtk4::gio::prelude::ApplicationExtManual;
+                use gtk4::gio::prelude::ApplicationExtManual;
 
-        use crate::platforms::gtk_window::GTKWindow;
-        
-        thread::spawn(|| {
-            moonhare_log::info("Created Window thread");
-            let application = GTKWindow::init();
-            application.get_application().run();
-        });
+                use crate::platforms::gtk_window::GTKWindow;
+                
+                thread::spawn(|| {
+                    moonhare_log::info("Created Window thread");
+                    let application = GTKWindow::init();
+                    application.get_application().run();
+                });
+            },
+        }
+
     }
 
     #[cfg(not(target_os = "linux"))]

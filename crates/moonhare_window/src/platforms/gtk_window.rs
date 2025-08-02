@@ -1,4 +1,4 @@
-use gtk4::{gio::prelude::ApplicationExt, prelude::{GtkWindowExt, WidgetExt}, Application, ApplicationWindow};
+use gtk4::{gio::prelude::ApplicationExt, glib, prelude::{GtkWindowExt, WidgetExt}, Application, ApplicationWindow};
 
 use crate::{window_config, MoonhareWindow};
 
@@ -44,7 +44,5 @@ impl MoonhareWindow for GTKWindow {
 
     fn shutdown() {
     }
-    
-
 }
 
