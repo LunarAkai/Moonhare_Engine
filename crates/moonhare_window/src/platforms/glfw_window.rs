@@ -38,7 +38,8 @@ impl GLFWWindow {
     }
 
 
-    pub fn handle_window_event(_window: &mut glfw::Window, event: glfw::WindowEvent) {
+    pub fn handle_window_event(&self, event: glfw::WindowEvent) {
+        
         match event {
             glfw::WindowEvent::Close => {
                 WindowCloseEvent::emit();

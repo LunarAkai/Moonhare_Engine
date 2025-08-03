@@ -43,8 +43,6 @@ impl WindowConfig {
     }
 }
 
-
-
 fn default_visibility() -> bool {
     true
 }

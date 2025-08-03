@@ -9,8 +9,8 @@ pub mod backend;
 pub use glium;
 
 
-pub fn build_context(window: PWindow) -> Rc<Context>{
-    let gl_window = Rc::new(RefCell::new(window));
+pub fn build_context(window: Rc<RefCell<PWindow>>) -> Rc<Context>{
+    let gl_window = window;
         // now building the context
 
     let context = unsafe {

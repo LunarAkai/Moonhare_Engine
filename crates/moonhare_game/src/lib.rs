@@ -1,8 +1,8 @@
 //! Base functionality for a Moonhare Game Engine Project
 
-use std::rc::Rc;
+use std::{cell::{RefCell, RefMut}, rc::Rc, sync::Arc};
 
-use moonhare_graphics::glium::{backend::Context, glutin::api::egl::context};
+use moonhare_graphics::glium::{backend::Context, glutin::api::egl::context, winit::event_loop};
 use moonhare_log::*;
 use moonhare_window::{glfw::PWindow, platforms::glfw_window::GLFWWindow};
 pub mod basic;
@@ -37,19 +37,16 @@ impl Game {
         let mut glfw_window_unwrapped: moonhare_window::platforms::glfw_window::GLFWWindow = self.glfw_window.unwrap();
         let mut context: std::rc::Rc<moonhare_graphics::glium::backend::Context>;
 
-        context = moonhare_graphics::build_context(glfw_window_unwrapped.glfw_window);
+        context = moonhare_graphics::build_context(Rc::new(RefCell::new(glfw_window_unwrapped.glfw_window)));
         
-
-    
-        while self.is_running { 
-            let _ = move |mut window: GLFWWindow| {
-                handle_window_event(&mut window);
-            };
+        
+        let value = glfw_window_unwrapped;
+        while self.is_running {
+            // can't move glfwwindow cause i can't implement clone, or idk
+            handle_window_event(value);
+            render(context.clone());
 
             // update();
-            // render();
-            render(context.clone());
-                
         }
     }
 
@@ -64,14 +61,15 @@ fn default_game_name() -> String {
 }
 
 /// Deals with GLFW Window Events (in `monhare_window`)
-fn handle_window_event(glfw_window: &mut moonhare_window::platforms::glfw_window::GLFWWindow) {
+fn handle_window_event(mut glfw_window: GLFWWindow) {
     glfw_window.glfw_window.glfw.poll_events();
     for (_, event) in moonhare_window::glfw::flush_messages(&glfw_window.events) {
-        moonhare_window::platforms::glfw_window::GLFWWindow::handle_window_event(&mut glfw_window.glfw_window, event);
+        moonhare_window::platforms::glfw_window::GLFWWindow::handle_window_event(&glfw_window, event);
     }   
 }
 
 fn render(context: Rc<Context>) {
+ 
     let mut target = moonhare_graphics::glium::Frame::new(context.clone(), context.get_framebuffer_dimensions());
     moonhare_graphics::glium::Surface::clear_color(&mut target, 0.0, 0.0, 1.0, 1.0);
     target.finish().unwrap();
