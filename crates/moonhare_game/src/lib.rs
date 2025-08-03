@@ -18,7 +18,7 @@ impl Default for Game {
         Self { 
             is_running: true,
             name: default_game_name(),
-            context: WindowRenderContext::OPENGLGTK
+            context: WindowRenderContext::OPENGLWINIT
         }
     }
 }

@@ -8,3 +8,4 @@ authors.workspace = true
 moonhare_log = { path = "../moonhare_log" }
 moonhare_event = { path = "../moonhare_event" }
 gtk4 = "*"
+winit = "0.30"

@@ -6,6 +6,7 @@ pub mod platforms;
 pub enum WindowRenderContext {
     VULKANGTK, // TODO
     OPENGLGTK,
+    OPENGLWINIT,
 }
 
 pub trait WindowResult {
@@ -39,11 +40,17 @@ impl Window {
                 use crate::platforms::gtk_window::GTKWindow;
                 
                 thread::spawn(|| {
-                    moonhare_log::info("Created Window thread");
+                    moonhare_log::info("Created GTK Window thread");
                     let application = GTKWindow::init();
                     application.get_application().run();
                 });
             },
+            WindowRenderContext::OPENGLWINIT => {
+                use crate::platforms::winit_window::WinitWindow;
+
+                moonhare_log::info("Creating Winit OpenGL Winit");
+                let application = WinitWindow::init();
+            }
         }
     }
 

@@ -14,8 +14,8 @@ impl Event for KeyPressedEvent {
         EventType::KeyPressed
     }
     
-    fn emit(&self) -> &impl Event{
-        self
+    fn emit() {
+        
     }
 }
 
