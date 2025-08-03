@@ -1,8 +1,7 @@
 use std::sync::Arc;
 
 use glfw::{Context, Glfw, GlfwReceiver, PWindow, WindowEvent};
-use gtk4::gdk::Key;
-use moonhare_event::{event::{self, Event}, events::window_events::window_close_event::WindowCloseEvent};
+use moonhare_event::{event::Event, events::window_events::window_close_event::WindowCloseEvent};
 
 use crate::{window_config, MoonhareWindow};
 
@@ -23,7 +22,7 @@ impl GLFWWindow {
         let (mut window, events) = glfw.create_window(
             config.width, 
             config.height, 
-            format!("{} GLFW", config.title).as_str(), 
+            format!("{} GLFW {}", config.title, glfw::get_version_string()).as_str(), 
             glfw::WindowMode::Windowed)
             .unwrap();
 
@@ -39,7 +38,7 @@ impl GLFWWindow {
     }
 
 
-    pub fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
+    pub fn handle_window_event(_window: &mut glfw::Window, event: glfw::WindowEvent) {
         match event {
             glfw::WindowEvent::Close => {
                 WindowCloseEvent::emit();

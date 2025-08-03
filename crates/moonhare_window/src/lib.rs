@@ -24,7 +24,6 @@ pub struct Window {
 
 
 impl Window {
-    /// creates a glfw window while spawning a new thread that the window runs on.
     #[cfg(target_os = "linux")]
     pub fn create(context: WindowRenderContext) -> GLFWWindow {
         match context {

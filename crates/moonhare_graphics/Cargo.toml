@@ -5,3 +5,5 @@ version.workspace = true
 authors.workspace = true
 
 [dependencies]
+moonhare_window = { path = "../moonhare_window" }
+glium = "0.36"

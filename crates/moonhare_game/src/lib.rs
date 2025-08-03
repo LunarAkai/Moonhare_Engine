@@ -3,7 +3,7 @@
 use std::sync::Arc;
 
 use moonhare_log::*;
-use moonhare_window::{glfw, platforms::glfw_window::GLFWWindow, Window, WindowRenderContext};
+use moonhare_window::{glfw::{self, PWindow}, platforms::glfw_window::GLFWWindow, Window, WindowRenderContext};
 
 pub mod basic;
 
@@ -32,26 +32,14 @@ impl Game {
         Game::default()
     }
 
-    /*
-    
-    pub fn run_window(mut glfw_w: GLFWWindow) {
-        while !glfw_w.glfw_window.should_close() {
-            glfw_w.glfw.poll_events();
-            for(_, event) in glfw::flush_messages(&glfw_w.events) {
-                Self::handle_window_event(&mut glfw_w.glfw_window, event);
-            }
-        }
-    }
-     */
     pub fn run(self) {
         info("Running Game...");
-        let mut a = self.glfw_window.unwrap();
+        let mut glfw_window_unwrapped: GLFWWindow = self.glfw_window.unwrap();
     
         while self.is_running {
-            a.glfw_window.glfw.poll_events();
-            for (_, event) in glfw::flush_messages(&a.events) {
-                GLFWWindow::handle_window_event(&mut a.glfw_window, event);
-            }        
+            handle_window_event(&mut glfw_window_unwrapped);
+            // update();
+            // render();
         }
     }
 
@@ -63,4 +51,12 @@ impl Game {
 
 fn default_game_name() -> String {
     "Moonhare Game".to_owned()
+}
+
+/// Deals with GLFW Window Events (in `monhare_window`)
+fn handle_window_event(glfw_window: &mut GLFWWindow) {
+    glfw_window.glfw_window.glfw.poll_events();
+    for (_, event) in glfw::flush_messages(&glfw_window.events) {
+        GLFWWindow::handle_window_event(&mut glfw_window.glfw_window, event);
+    }   
 }
