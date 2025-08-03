@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{cell::RefCell, rc::Rc, sync::Arc};
 
 use glfw::{Context, Glfw, GlfwReceiver, PWindow, Window, WindowEvent};
 use moonhare_event::{event::Event, events::window_events::window_close_event::WindowCloseEvent};
@@ -7,13 +7,19 @@ use crate::{window_config, MoonhareWindow};
 
 #[derive(Debug)]
 pub struct GLFWWindow {
-    pub glfw_window: PWindow,
-    pub events: GlfwReceiver<(f64, WindowEvent)>,
+    pub glfw_window: Rc<RefCell<PWindow>>,
+    pub events: Rc<RefCell<GlfwReceiver<(f64, WindowEvent)>>>,
     pub glfw: Glfw,
     pub is_running: bool,
 }
 
 const APP_ID: &str = "de.lunarakai.moonhare_engine";
+
+impl Clone for GLFWWindow {
+    fn clone(&self) -> Self {
+        Self { glfw_window: self.glfw_window.clone(), events: self.events.clone(), glfw: self.glfw.clone(), is_running: self.is_running.clone() }
+    }
+}
 
 impl GLFWWindow {
     fn new() -> Self {
@@ -30,8 +36,8 @@ impl GLFWWindow {
         window.make_current();
 
         Self {
-            glfw_window: window.try_into().unwrap(),
-            events: events,
+            glfw_window: Rc::new(RefCell::new(window)),
+            events: Rc::new(RefCell::new(events)),
             glfw: glfw,
             is_running: true
         }
