@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use glfw::{Context, Glfw, GlfwReceiver, PWindow, WindowEvent};
+use glfw::{Context, Glfw, GlfwReceiver, PWindow, Window, WindowEvent};
 use moonhare_event::{event::Event, events::window_events::window_close_event::WindowCloseEvent};
 
 use crate::{window_config, MoonhareWindow};
@@ -30,7 +30,7 @@ impl GLFWWindow {
         window.make_current();
 
         Self {
-            glfw_window: window,
+            glfw_window: window.try_into().unwrap(),
             events: events,
             glfw: glfw,
             is_running: true

@@ -6,8 +6,8 @@ use moonhare_window::glfw::Context;
 
 // adopted from the glium repo -> examples -> manual_creation.rs
 #[derive(Clone)]
-struct Backend {
-    gl_window: Rc<RefCell<moonhare_window::glfw::Window>>,
+pub struct Backend {
+    pub gl_window: Rc<RefCell<moonhare_window::glfw::PWindow>>,
 }
 
 unsafe impl glium::backend::Backend for Backend {
