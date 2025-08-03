@@ -7,3 +7,5 @@ authors.workspace = true
 [dependencies]
 moonhare_window = { path = "../moonhare_window" }
 glium = "0.36"
+state = "0.6"
+lazy_static = "*"

@@ -7,6 +7,7 @@ use crate::{window_config, MoonhareWindow};
 
 #[derive(Debug)]
 pub struct GLFWWindow {
+    // Todo: learn more about rust smart pointers so i actually understand whats going on here, but hey it works for now 
     pub glfw_window: Rc<RefCell<PWindow>>,
     pub events: Rc<RefCell<GlfwReceiver<(f64, WindowEvent)>>>,
     pub glfw: Glfw,
