@@ -1,0 +1,8 @@
+[package]
+edition = "2024"
+name = "moonhare_ecs"
+version.workspace = true
+authors.workspace = true
+
+[dependencies]
+anymap = "*"

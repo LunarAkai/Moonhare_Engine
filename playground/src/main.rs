@@ -2,7 +2,6 @@ use std::fs::File;
 
 use moonhare_engine::{game::Game, log};
 
-
 fn main() {
     let _ = log::configere_logger();
     log::info("test");

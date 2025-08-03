@@ -5,8 +5,8 @@ version.workspace = true
 authors.workspace = true
 
 [dependencies]
-bevy_ecs = "0.16.1"
 
+moonhare_ecs = { path = "../moonhare_ecs" }
 moonhare_event = { path = "../moonhare_event" }
 moonhare_game = { path = "../moonhare_game" }
 moonhare_graphics = { path = "../moonhare_graphics" }
