@@ -61,15 +61,11 @@ impl ApplicationHandler for WinitWindow {
 
 
 impl MoonhareWindow for WinitWindow {  
-    type WindowResult = WinitWindow; 
-    fn init() -> Self::WindowResult {
+    fn init() {
         let event_loop = EventLoop::new().unwrap();
         event_loop.set_control_flow(ControlFlow::Poll);
         let mut app = WinitWindow::default();
         let _ = event_loop.run_app(&mut app);
-
-        // Need to find a better way because this will not return until the window is closed
-        app
     }
 
 

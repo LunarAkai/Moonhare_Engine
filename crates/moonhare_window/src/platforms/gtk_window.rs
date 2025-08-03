@@ -39,15 +39,14 @@ impl GTKWindow {
 }
 
 impl MoonhareWindow for GTKWindow {  
-    type WindowResult = GTKWindow; 
-    fn init() -> Self::WindowResult {
+    fn init() {
         let app = Application::builder().application_id(APP_ID).build();
 
         app.connect_activate(GTKWindow::build_ui);
 
         Self {
             application: app
-        }
+        };
     }
 
 

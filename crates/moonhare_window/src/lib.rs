@@ -7,14 +7,14 @@ pub enum WindowRenderContext {
     VULKANGTK, // TODO
     OPENGLGTK,
     OPENGLWINIT,
+    OPENGLGLFW,
 }
 
 pub trait WindowResult {
 }
 
 pub trait MoonhareWindow {
-    type WindowResult;
-    fn init() -> Self::WindowResult;
+    fn init();
     fn on_update();
     fn shutdown();
 }
@@ -33,23 +33,21 @@ impl Window {
                 todo!()
             },
             WindowRenderContext::OPENGLGTK => {
-                use std::thread;
-
-                use gtk4::gio::prelude::ApplicationExtManual;
-
-                use crate::platforms::gtk_window::GTKWindow;
-                
-                thread::spawn(|| {
-                    moonhare_log::info("Created GTK Window thread");
-                    let application = GTKWindow::init();
-                    application.get_application().run();
-                });
+                todo!()
             },
             WindowRenderContext::OPENGLWINIT => {
                 use crate::platforms::winit_window::WinitWindow;
 
-                moonhare_log::info("Creating Winit OpenGL Winit");
-                let application = WinitWindow::init();
+                moonhare_log::info("Creating Winit OpenGL Window");
+                WinitWindow::init();
+            },
+            WindowRenderContext::OPENGLGLFW => {
+                std::thread::spawn(|| {
+                    use crate::platforms::glfw_window::GLFWWindow;
+                    moonhare_log::info("Creating GLFW OpenGL Window");
+                    GLFWWindow::init();
+                });
+
             }
         }
     }
