@@ -8,10 +8,10 @@ use crate::{window_config, MoonhareWindow};
 
 #[derive(Debug)]
 pub struct GLFWWindow {
-    glfw_window: PWindow,
-    events: GlfwReceiver<(f64, WindowEvent)>,
-    glfw: Glfw,
-    is_running: bool,
+    pub glfw_window: PWindow,
+    pub events: GlfwReceiver<(f64, WindowEvent)>,
+    pub glfw: Glfw,
+    pub is_running: bool,
 }
 
 const APP_ID: &str = "de.lunarakai.moonhare_engine";
@@ -38,16 +38,8 @@ impl GLFWWindow {
         }
     }
 
-    fn run_window(&mut self) {
-        while !self.glfw_window.should_close() {
-            self.glfw.poll_events();
-            for(_, event) in glfw::flush_messages(&self.events) {
-                Self::handle_window_event(&mut self.glfw_window, event);
-            }
-        }
-    }
 
-    fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
+    pub fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
         match event {
             glfw::WindowEvent::Close => {
                 WindowCloseEvent::emit();
@@ -55,13 +47,12 @@ impl GLFWWindow {
             _ => {},
         }
     }
-    
 }
 
 impl MoonhareWindow for GLFWWindow {  
-    fn init() {
-        let mut window = GLFWWindow::new();
-        GLFWWindow::run_window(&mut window);
+    fn init() -> GLFWWindow {
+        let window = GLFWWindow::new();
+        window
     }
 
 

@@ -1,7 +1,9 @@
 //! Base functionality for a Moonhare Game Engine Project
 
+use std::sync::Arc;
+
 use moonhare_log::*;
-use moonhare_window::{Window, WindowRenderContext};
+use moonhare_window::{glfw, platforms::glfw_window::GLFWWindow, Window, WindowRenderContext};
 
 pub mod basic;
 
@@ -11,6 +13,7 @@ pub struct Game {
     pub is_running: bool,
     pub name: String,
     pub context: WindowRenderContext,
+    pub glfw_window: Option<GLFWWindow>
 }
 
 impl Default for Game {
@@ -18,7 +21,8 @@ impl Default for Game {
         Self { 
             is_running: true,
             name: default_game_name(),
-            context: WindowRenderContext::OPENGLGLFW
+            context: WindowRenderContext::OPENGLGLFW,
+            glfw_window: None,
         }
     }
 }
@@ -28,16 +32,32 @@ impl Game {
         Game::default()
     }
 
-    pub fn run(&self) {
+    /*
+    
+    pub fn run_window(mut glfw_w: GLFWWindow) {
+        while !glfw_w.glfw_window.should_close() {
+            glfw_w.glfw.poll_events();
+            for(_, event) in glfw::flush_messages(&glfw_w.events) {
+                Self::handle_window_event(&mut glfw_w.glfw_window, event);
+            }
+        }
+    }
+     */
+    pub fn run(self) {
         info("Running Game...");
+        let mut a = self.glfw_window.unwrap();
+    
         while self.is_running {
-            
+            a.glfw_window.glfw.poll_events();
+            for (_, event) in glfw::flush_messages(&a.events) {
+                GLFWWindow::handle_window_event(&mut a.glfw_window, event);
+            }        
         }
     }
 
     pub fn add_window(&mut self) {
         moonhare_log::info(format!("Adding window to {:?}", self));
-        Window::create(self.context);
+        self.glfw_window =Some(Window::create(self.context).into());
     }
 }
 
