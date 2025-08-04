@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Hash)]
 pub struct GenerationalIndex {
     index: usize,
     generation: u64,
@@ -14,17 +14,22 @@ impl GenerationalIndex {
     }
 }
 
+#[derive(Debug, Clone)]
 struct AllocatorEntry {
     is_live: bool,
     generation: u64,
 }
 
+#[derive(Debug, Clone, Default)]
 pub struct GenerationalIndexAllocator {
     entries: Vec<AllocatorEntry>,
     free: Vec<usize>,
 }
 
 impl GenerationalIndexAllocator {
+    pub fn new() -> Self {
+        Default::default()
+    }
     pub fn allocate(&mut self) -> GenerationalIndex {
         match self.free.pop() {
             Some(index) =>{
@@ -64,6 +69,10 @@ impl GenerationalIndexAllocator {
     pub fn is_live(&self, index: GenerationalIndex) -> bool {
         index.index() < self.entries.len() && self.entries[index.index()].generation == index.generation && self.entries[index.index()].is_live
     }
+
+    pub fn max_allocated_index(&self) -> usize {
+        self.entries.len()
+    }
 }
 
 struct ArrayEntry<T> {
@@ -74,7 +83,15 @@ struct ArrayEntry<T> {
 pub struct GenerationalIndexArray<T>(Vec<Option<ArrayEntry<T>>>);
 
 impl <T> GenerationalIndexArray<T> {
-    pub fn set(&mut self, index: GenerationalIndex, value: T) {
+    pub fn new() -> GenerationalIndexArray<T> {
+        GenerationalIndexArray(Vec::new())
+    }
+
+    pub fn clear(&mut self) {
+        self.0.clear();
+    }
+    
+    pub fn insert(&mut self, index: GenerationalIndex, value: T) {
         while self.0.len() <= index.index()  {
             self.0.push(None);
         }

@@ -2,6 +2,8 @@
 
 use std::rc::Rc;
 
+
+use moonhare_ecs::world::World;
 use moonhare_graphics::{color::Color, glium::{backend::Context, glutin::api::egl::context}};
 use moonhare_log::*;
 use moonhare_window::{platforms::glfw_window::GLFWWindow};
@@ -10,19 +12,17 @@ pub mod basic;
 /// Only one Game may exist per project
 #[derive(Debug)]
 pub struct Game {
+    pub world: World,
     pub is_running: bool,
     pub name: String,
-    pub context: moonhare_window::WindowRenderContext,
-    pub glfw_window: Option<moonhare_window::platforms::glfw_window::GLFWWindow>,
 }
 
 impl Default for Game {
     fn default() -> Self {
         Self { 
+            world: World::new(),
             is_running: true,
             name: default_game_name(),
-            context: moonhare_window::WindowRenderContext::OPENGLGLFW,
-            glfw_window: None,
         }
     }
 }

@@ -791,6 +791,7 @@ version = "0.1.0"
 name = "moonhare_game"
 version = "0.1.0"
 dependencies = [
+ "moonhare_ecs",
  "moonhare_graphics",
  "moonhare_log",
  "moonhare_window",
