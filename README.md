@@ -11,24 +11,35 @@ Game Engine written in Rust
 - allow Scripting via C#
 - learn a metric ton about rust, game engine architecture and graphics programming :3
 
+
+## Blog
+On my Blog I'm writing a series about building this engine.
+So far these parts have been published:
+
+- [Writing a Game Engine is a stupid idea - lets do it!](https://lunarakai.de/blog/2025/08/game_engine_1)
+
 ## Architecture:
 
 ### Crates
+- [MoonhareECS](crates/moonhare_ecs/)
+    - Entity Component System
 - [MoonhareEngine](moonhare_engine/)
 - [MoonhareEvent](crates/moonhare_event/)
 - [MoonhareGame](crates/moonhare_game/)
     - core Engine functionality
 - [MoonhareGraphics](crates/moonhare_graphics/)
+    - provides integration for GLFW with Glium (OpenGL)
+    - Abstraction for used Graphics API
 - [MoonhareLog](crates/moonhare_log/)
     - Wrapper around the Log and fern crates
 - [MoonhareWindow](crates/moonhare_window/)
-    - deals with OpenGL/Vulkan Window creation
+    - deals with GLFW Window creation
 
 
 ### Game Loop:
 - Start Run
             
-- (enter loop) ... -> Update -> Render -> Update ...   
+- (enter loop) ... -> WindowEvents/Input -> Update -> Render -> ...   
 
 - Cleanup   
 
