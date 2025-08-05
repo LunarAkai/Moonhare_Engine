@@ -6,6 +6,7 @@ authors.workspace = true
 
 [dependencies]
 
+moonhare_derives = { path = "../moonhare_derives" }
 moonhare_ecs = { path = "../moonhare_ecs" }
 moonhare_event = { path = "../moonhare_event" }
 moonhare_game = { path = "../moonhare_game" }

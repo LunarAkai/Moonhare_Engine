@@ -5,7 +5,9 @@ version.workspace = true
 authors.workspace = true
 
 [dependencies]
+moonhare_derives = { path = "../moonhare_derives" }
 moonhare_ecs = { path = "../moonhare_ecs" }
 moonhare_graphics = { path = "../moonhare_graphics" }
 moonhare_log = { path = "../moonhare_log" }
 moonhare_window = { path = "../moonhare_window" }
+

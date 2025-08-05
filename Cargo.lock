@@ -770,6 +770,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "moonhare_derives"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "moonhare_ecs"
 version = "0.1.0"
 dependencies = [
@@ -791,6 +800,7 @@ version = "0.1.0"
 name = "moonhare_game"
 version = "0.1.0"
 dependencies = [
+ "moonhare_derives",
  "moonhare_ecs",
  "moonhare_graphics",
  "moonhare_log",
@@ -811,6 +821,7 @@ dependencies = [
 name = "moonhare_internal"
 version = "0.1.0"
 dependencies = [
+ "moonhare_derives",
  "moonhare_ecs",
  "moonhare_event",
  "moonhare_game",

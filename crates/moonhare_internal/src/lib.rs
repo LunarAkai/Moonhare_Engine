@@ -1,3 +1,4 @@
+pub use moonhare_derives as moon_derives;
 pub use moonhare_ecs as ecs;
 pub use moonhare_event as event;
 pub use moonhare_game as game;

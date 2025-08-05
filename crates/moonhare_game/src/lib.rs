@@ -10,9 +10,7 @@ use moonhare_window::{platforms::glfw_window::GLFWWindow};
 use crate::systems::system::{BaseSystems, System};
 
 pub mod systems;
-pub mod basic;
-
-/// Only one Game may exist per project
+pub mod nodes;
 /* #[derive(Debug)]
 pub struct Game {
     pub base_systems: BaseSystems,
@@ -21,6 +19,7 @@ pub struct Game {
     pub is_running: bool,
     pub name: String,
 } */
+
 
 // when creating a game, you can add systems to it, which do _things_ 
 // BaseSystems -> Window, Update, Render
@@ -73,6 +72,8 @@ impl Game {
     }
 
     pub fn run(self) {
+
+
         info("Running Game...");
         //------------------------------
         //  Run Init on all Systems
@@ -116,3 +117,4 @@ fn render(context: Rc<Context>) {
     let target = moonhare_graphics::glium::Frame::new(context.clone(), context.get_framebuffer_dimensions());
     moonhare_graphics::draw_background_color(Color::color_from_rgb(255, 255, 255), target);
 }
+

@@ -1,0 +1,14 @@
+[package]
+edition = "2024"
+name = "moonhare_derives"
+version.workspace = true
+authors.workspace = true
+
+[dependencies]
+syn = "2.0"
+proc-macro2 = "1"
+quote = "1"
+
+[lib]
+proc-macro = true
+
