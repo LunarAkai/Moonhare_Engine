@@ -1,28 +1,46 @@
 //! Base functionality for a Moonhare Game Engine Project
 
-use std::rc::Rc;
+use std::{any::Any, rc::Rc};
 
 
-use moonhare_ecs::world::World;
 use moonhare_graphics::{color::Color, glium::{backend::Context, glutin::api::egl::context}};
 use moonhare_log::*;
 use moonhare_window::{platforms::glfw_window::GLFWWindow};
+
+use crate::systems::system::{BaseSystems, System};
+
+pub mod systems;
 pub mod basic;
 
 /// Only one Game may exist per project
-#[derive(Debug)]
+/* #[derive(Debug)]
 pub struct Game {
-    pub world: World,
+    pub base_systems: BaseSystems,
+    pub context: moonhare_window::WindowRenderContext,
+    pub glfw_window: Option<moonhare_window::platforms::glfw_window::GLFWWindow>,
     pub is_running: bool,
     pub name: String,
+} */
+
+// when creating a game, you can add systems to it, which do _things_ 
+// BaseSystems -> Window, Update, Render
+
+// Hierachy:
+//      [Game] -> <Systems> -> <Nodes> (-> [Node] -> ... )
+//-------------
+//  [ ] => only 1 --- < > => allow multiple
+#[derive(Debug)]
+pub struct Game {
+    pub systems: Option<Vec<Box<dyn System>>>,
+    pub is_running: bool
 }
+
 
 impl Default for Game {
     fn default() -> Self {
         Self { 
-            world: World::new(),
-            is_running: true,
-            name: default_game_name(),
+            systems: None,
+            is_running: true
         }
     }
 }
@@ -42,8 +60,23 @@ impl Game {
         Game::default()
     }
 
+    pub fn add_base_systems(&mut self) {
+
+    }
+
+    pub fn add_system(&mut self, system: Box<dyn System>) {
+        if self.systems.is_none() {
+           let a: Vec<Box<dyn System>> = vec![];
+           self.systems = Some(a);
+        }
+        &self.systems.as_mut().unwrap().push(system);
+    }
+
     pub fn run(self) {
         info("Running Game...");
+        //------------------------------
+        //  Run Init on all Systems
+        //------------------------------
         let glfw_window_unwrapped = self.glfw_window;
         let mut graphics_handler: GraphicsHandler = GraphicsHandler { ..Default::default() };
         let context: std::rc::Rc<moonhare_graphics::glium::backend::Context>;
@@ -56,6 +89,7 @@ impl Game {
             handle_window_event(value.as_mut().unwrap());
             render(context.clone());
 
+            self.base_systems.game_loop();
             // update();
         }
     }
