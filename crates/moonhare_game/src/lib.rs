@@ -26,7 +26,7 @@ pub struct Game {
 // BaseSystems -> Window, Update, Render
 
 // Hierachy:
-//      [Game] -> <Systems> -> <Nodes> (-> [Node] -> ... )
+//      [Game] -> <Systems> -> <Nodes> (-> <Nodes> -> ... )
 //-------------
 //  [ ] => only 1 --- < > => allow multiple
 #[derive(Debug)]
