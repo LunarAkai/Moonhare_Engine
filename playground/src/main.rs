@@ -1,6 +1,6 @@
 use std::fs::File;
 
-use moonhare_engine::{game::Game, log};
+use moonhare_engine::{game::{basic::world::World, nodes::window::Window, Game}, log};
 
 
 fn main() {
@@ -8,10 +8,10 @@ fn main() {
     log::info("test");
     
     let mut game = Game::new();
-    game.add_window();
-    
-    log::info(format!("Game: {:?}", game));
-    
-    // Enters Loop
-    game.run();
+    let mut world = World::new();
+
+    let window = Window::default();
+    world.add_node(Box::new(window));
+    game.add_world(world.clone());
+    log::info(format!("{:?}", game.get_worlds()));
 }
