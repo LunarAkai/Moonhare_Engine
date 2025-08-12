@@ -35,6 +35,9 @@ So far these parts have been published:
 - [MoonhareWindow](crates/moonhare_window/)
     - deals with GLFW Window creation
 
+### Node System
+![](/docs/engine_design.drawio.png)
+
 
 ### Game Loop:
 ![](/docs/game_loop.drawio.png)
