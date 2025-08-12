@@ -1,5 +1,3 @@
 use crate::event::Event;
 
-pub trait MouseEvent: Event {
-    
-}
+pub trait MouseEvent: Event {}

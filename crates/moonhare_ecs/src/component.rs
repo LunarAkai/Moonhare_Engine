@@ -8,13 +8,10 @@ pub struct Component<T: ComponentType> {
     component_type: T,
 }
 
-pub trait ComponentType{}
+pub trait ComponentType {}
 
 impl<T: ComponentType> Component<T> {
     pub fn new(id: usize, component_type: T) -> Self {
-        Self { 
-            id, 
-            component_type
-        }
+        Self { id, component_type }
     }
 }

@@ -10,9 +10,9 @@ pub struct WindowConfig {
 
 impl Default for WindowConfig {
     fn default() -> Self {
-        Self { 
-            title: "Moonhare Engine".to_owned(), 
-            width: 1280, 
+        Self {
+            title: "Moonhare Engine".to_owned(),
+            width: 1280,
             height: 720,
             visble: default_visibility(),
             decorations: default_decorations(),
@@ -25,7 +25,7 @@ impl WindowConfig {
     fn set_window_name(mut self, name: String) {
         self.title = name;
     }
-    
+
     fn set_window_height(mut self, new_height: u32) {
         self.height = new_height;
     }

@@ -8,21 +8,14 @@ pub trait Node: DynClone {
 }
 dyn_clone::clone_trait_object!(Node);
 
-
-
-
 impl Debug for dyn Node {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         writeln!(f, "")
-    } 
+    }
 }
 
 impl<T: Clone> Node for Box<T> {
-    fn init(&mut self) {
-      
-    }
+    fn init(&mut self) {}
 
-    fn update(&mut self) {
-
-    }
+    fn update(&mut self) {}
 }

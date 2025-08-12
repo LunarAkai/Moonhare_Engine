@@ -6,15 +6,13 @@ pub struct WindowSystem {
 
 impl Default for WindowSystem {
     fn default() -> Self {
-        Self { 
-            context: moonhare_window::WindowRenderContext::OPENGLGLFW, 
-            glfw_window: None 
+        Self {
+            context: moonhare_window::WindowRenderContext::OPENGLGLFW,
+            glfw_window: None,
         }
     }
 }
 
 impl WindowSystem {
-    pub(crate) fn update(&self) {
-
-    }
+    pub(crate) fn update(&self) {}
 }

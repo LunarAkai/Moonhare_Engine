@@ -8,7 +8,7 @@ impl GenerationalIndex {
     pub fn index(&self) -> usize {
         self.index
     }
-    
+
     pub fn generation(&self) -> u64 {
         self.generation
     }
@@ -32,7 +32,7 @@ impl GenerationalIndexAllocator {
     }
     pub fn allocate(&mut self) -> GenerationalIndex {
         match self.free.pop() {
-            Some(index) =>{
+            Some(index) => {
                 self.entries[index].generation += 1;
                 self.entries[index].is_live = true;
 
@@ -40,15 +40,15 @@ impl GenerationalIndexAllocator {
                     index,
                     generation: self.entries[index].generation,
                 }
-            },
+            }
             None => {
-                self.entries.push(AllocatorEntry { 
-                    is_live: true, 
-                    generation: 0, 
+                self.entries.push(AllocatorEntry {
+                    is_live: true,
+                    generation: 0,
                 });
 
                 GenerationalIndex {
-                    index: self.entries.len() -1,
+                    index: self.entries.len() - 1,
                     generation: 0,
                 }
             }
@@ -67,7 +67,9 @@ impl GenerationalIndexAllocator {
     }
 
     pub fn is_live(&self, index: GenerationalIndex) -> bool {
-        index.index() < self.entries.len() && self.entries[index.index()].generation == index.generation && self.entries[index.index()].is_live
+        index.index() < self.entries.len()
+            && self.entries[index.index()].generation == index.generation
+            && self.entries[index.index()].is_live
     }
 
     pub fn max_allocated_index(&self) -> usize {
@@ -82,7 +84,7 @@ struct ArrayEntry<T> {
 
 pub struct GenerationalIndexArray<T>(Vec<Option<ArrayEntry<T>>>);
 
-impl <T> GenerationalIndexArray<T> {
+impl<T> GenerationalIndexArray<T> {
     pub fn new() -> GenerationalIndexArray<T> {
         GenerationalIndexArray(Vec::new())
     }
@@ -90,9 +92,9 @@ impl <T> GenerationalIndexArray<T> {
     pub fn clear(&mut self) {
         self.0.clear();
     }
-    
+
     pub fn insert(&mut self, index: GenerationalIndex, value: T) {
-        while self.0.len() <= index.index()  {
+        while self.0.len() <= index.index() {
             self.0.push(None);
         }
 
@@ -105,9 +107,9 @@ impl <T> GenerationalIndexArray<T> {
             panic!("write an index from previous gen");
         }
 
-        self.0[index.index()] = Some(ArrayEntry { 
-            value, 
-            generation: index.generation(), 
+        self.0[index.index()] = Some(ArrayEntry {
+            value,
+            generation: index.generation(),
         });
     }
 
@@ -123,12 +125,14 @@ impl <T> GenerationalIndexArray<T> {
         }
 
         match &self.0[index.index()] {
-            Some(entry) => if entry.generation == index.generation() {
-                Some(&entry.value)
-            } else {
-                None
-            },
-            None => None
+            Some(entry) => {
+                if entry.generation == index.generation() {
+                    Some(&entry.value)
+                } else {
+                    None
+                }
+            }
+            None => None,
         }
     }
     pub fn get_mut(&mut self, index: GenerationalIndex) -> Option<&mut T> {
@@ -137,12 +141,14 @@ impl <T> GenerationalIndexArray<T> {
         }
 
         match &mut self.0[index.index()] {
-            Some(entry) => if entry.generation == index.generation() {
-                Some(&mut entry.value)
-            } else {
-                None
-            },
-            None => None
+            Some(entry) => {
+                if entry.generation == index.generation() {
+                    Some(&mut entry.value)
+                } else {
+                    None
+                }
+            }
+            None => None,
         }
     }
 }

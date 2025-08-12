@@ -1,7 +1,7 @@
 //! Provides functionality to create either a vulkan or opengl window
-pub mod window_config;
 pub mod platforms;
-pub use glfw as glfw;
+pub mod window_config;
+pub use glfw;
 
 use crate::platforms::glfw_window::GLFWWindow;
 
@@ -10,8 +10,7 @@ pub enum WindowRenderContext {
     OPENGLGLFW,
 }
 
-pub trait WindowResult {
-}
+pub trait WindowResult {}
 
 pub trait MoonhareWindow {
     fn init() -> GLFWWindow;
@@ -19,9 +18,7 @@ pub trait MoonhareWindow {
     fn shutdown();
 }
 
-pub struct Window {
-}
-
+pub struct Window {}
 
 impl Window {
     #[cfg(target_os = "linux")]

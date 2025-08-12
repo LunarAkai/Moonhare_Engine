@@ -1,6 +1,6 @@
-use proc_macro2::TokenStream as TokenStream2;
-use syn::{parse_macro_input, parse_quote, DeriveInput, GenericParam, Generics};
 use proc_macro::{self, TokenStream};
+use proc_macro2::TokenStream as TokenStream2;
+use syn::{DeriveInput, GenericParam, Generics, parse_macro_input, parse_quote};
 
 mod node;
 mod system;
@@ -11,8 +11,6 @@ pub fn system(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 
     system::system(input)
 }
-
-
 
 #[proc_macro_derive(Node)]
 pub fn node(input: proc_macro::TokenStream) -> TokenStream {

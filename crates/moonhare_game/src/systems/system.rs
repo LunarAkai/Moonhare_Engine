@@ -1,6 +1,8 @@
 use std::fmt::{Debug, Formatter};
 
-use crate::systems::{render_system::RenderSystem, update_system::UpdateSystem, window_system::WindowSystem};
+use crate::systems::{
+    render_system::RenderSystem, update_system::UpdateSystem, window_system::WindowSystem,
+};
 
 /// Systems are collections of related High Level Game Logic
 /// Systems can have Nodes as children
@@ -10,7 +12,7 @@ pub trait System {}
 impl Debug for dyn System {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
         writeln!(f, "")
-    } 
+    }
 }
 
 // todo: make this more generic so that new systems can be added by the game application it self
@@ -26,10 +28,10 @@ pub struct BaseSystems {
 
 impl BaseSystems {
     pub fn new() -> Self {
-        Self { 
-            window_system: WindowSystem::default(), 
-            update_system: UpdateSystem, 
-            render_system: RenderSystem 
+        Self {
+            window_system: WindowSystem::default(),
+            update_system: UpdateSystem,
+            render_system: RenderSystem,
         }
     }
     pub fn game_loop(&self) {
@@ -37,6 +39,6 @@ impl BaseSystems {
 
         self.update_system.update();
 
-        self.render_system.update();   
+        self.render_system.update();
     }
 }

@@ -1,9 +1,7 @@
 use crate::{event::Event, events::window_events::WindowEvent};
 
 #[derive(Debug)]
-pub struct WindowCloseEvent {
-
-}
+pub struct WindowCloseEvent {}
 
 impl Event for WindowCloseEvent {
     fn get_event_name() -> &'static str {
@@ -14,10 +12,7 @@ impl Event for WindowCloseEvent {
         todo!()
     }
 
-    fn emit(){
-    }
+    fn emit() {}
 }
 
-impl WindowEvent for WindowCloseEvent {
-
-}
+impl WindowEvent for WindowCloseEvent {}

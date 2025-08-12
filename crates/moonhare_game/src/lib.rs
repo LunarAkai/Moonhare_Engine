@@ -2,16 +2,21 @@
 
 use std::{any::Any, rc::Rc};
 
-
-use moonhare_graphics::{color::Color, glium::{backend::Context, glutin::api::egl::context}};
+use moonhare_graphics::{
+    color::Color,
+    glium::{backend::Context, glutin::api::egl::context},
+};
 use moonhare_log::*;
-use moonhare_window::{platforms::glfw_window::GLFWWindow};
+use moonhare_window::platforms::glfw_window::GLFWWindow;
 
-use crate::{basic::world::{self, World}, systems::system::{BaseSystems, System}};
+use crate::{
+    basic::world::{self, World},
+    systems::system::{BaseSystems, System},
+};
 
-pub mod systems;
 pub mod basic;
 pub mod nodes;
+pub mod systems;
 /* #[derive(Debug)]
 pub struct Game {
     pub base_systems: BaseSystems,
@@ -21,32 +26,30 @@ pub struct Game {
     pub name: String,
 } */
 
-
-// when creating a game, you can add systems to it, which do _things_ 
+// when creating a game, you can add systems to it, which do _things_
 // BaseSystems -> Window, Update, Render
 
 // Hierachy:
-//      [Game] -> <Systems> -> <Nodes> (-> <Nodes> -> ... )
+//      [Game] -> <World> -> <Nodes> (-> <Nodes> -> ... )
 //-------------
 //  [ ] => only 1 --- < > => allow multiple
 #[derive(Debug, Clone)]
 pub struct Game {
     pub world: Vec<World>,
-    pub is_running: bool
+    pub is_running: bool,
 }
-
 
 impl Default for Game {
     fn default() -> Self {
-        Self { 
+        Self {
             world: vec![],
-            is_running: true
+            is_running: true,
         }
     }
 }
 
 pub struct GraphicsHandler {
-    pub context: Option<Rc<Context>>
+    pub context: Option<Rc<Context>>,
 }
 
 impl Default for GraphicsHandler {
@@ -81,12 +84,8 @@ impl Game {
             }
         }
     }
-
 }
-
 
 fn default_game_name() -> String {
     "Moonhare Game".to_owned()
 }
-
-

@@ -3,13 +3,10 @@ pub struct UpdateSystem;
 
 impl Default for UpdateSystem {
     fn default() -> Self {
-        Self { 
-        }
+        Self {}
     }
 }
 
 impl UpdateSystem {
-    pub(crate) fn update(&self) {
-        
-    }
+    pub(crate) fn update(&self) {}
 }

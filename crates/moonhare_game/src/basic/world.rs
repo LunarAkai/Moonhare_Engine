@@ -1,15 +1,14 @@
 use crate::nodes::node::Node;
 
+/// World holds Nodes
 #[derive(Debug, Clone)]
 pub struct World {
-    nodes: Vec<Box<dyn Node>>
+    nodes: Vec<Box<dyn Node>>,
 }
 
 impl World {
     pub fn new() -> Self {
-        Self { 
-            nodes: vec![]
-        }
+        Self { nodes: vec![] }
     }
 
     pub fn add_node(&mut self, node: Box<dyn Node>) {
@@ -27,4 +26,4 @@ impl World {
             node.update();
         }
     }
-} 
+}

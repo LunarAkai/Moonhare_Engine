@@ -1,7 +1,10 @@
-use crate::{event::{Event, EventType}, events::key_events::KeyEvent};
+use crate::{
+    event::{Event, EventType},
+    events::key_events::KeyEvent,
+};
 
 #[derive(Debug)]
-struct KeyPressedEvent{}
+struct KeyPressedEvent {}
 
 const KEY_PRESSED_EVENT_NAME: &str = "KeyPressedEvent";
 
@@ -13,12 +16,8 @@ impl Event for KeyPressedEvent {
     fn get_event_type() -> EventType {
         EventType::KeyPressed
     }
-    
-    fn emit() {
-        
-    }
+
+    fn emit() {}
 }
 
-impl super::KeyEvent for KeyPressedEvent {
-
-}
+impl super::KeyEvent for KeyPressedEvent {}

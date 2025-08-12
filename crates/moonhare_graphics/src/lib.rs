@@ -1,22 +1,29 @@
 //! Crate for providing an abstraction layer over different graphics APIs
 
-use std::{cell::{Cell, RefCell}, rc::Rc, sync::{Arc, Mutex, RwLock}};
+use std::{
+    cell::{Cell, RefCell},
+    rc::Rc,
+    sync::{Arc, Mutex, RwLock},
+};
 
-use glium::{backend::{Context, Facade}, Frame, Surface};
+use glium::{
+    Frame, Surface,
+    backend::{Context, Facade},
+};
 use lazy_static::lazy_static;
 use moonhare_window::glfw::PWindow;
-pub mod shader;
 pub mod backend;
-pub mod vertices;
 pub mod color;
+pub mod shader;
+pub mod vertices;
 pub use glium;
 use state::InitCell;
 
 use crate::color::Color;
 
-pub fn build_context(window: Rc<RefCell<PWindow>>) -> Rc<Context>{
+pub fn build_context(window: Rc<RefCell<PWindow>>) -> Rc<Context> {
     let gl_window: Rc<RefCell<PWindow>> = window;
-        // now building the context
+    // now building the context
 
     let context = unsafe {
         // The first parameter is our backend.

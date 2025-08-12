@@ -1,8 +1,13 @@
 pub enum EventType {
     None,
-    WindowClose, WindowResize,
-    KeyPressed, KeyReleased,
-    MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
+    WindowClose,
+    WindowResize,
+    KeyPressed,
+    KeyReleased,
+    MouseButtonPressed,
+    MouseButtonReleased,
+    MouseMoved,
+    MouseScrolled,
 }
 
 /// Base Class for Engine Events
@@ -13,4 +18,3 @@ pub trait Event {
     /// Emits the Event
     fn emit();
 }
-

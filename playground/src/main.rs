@@ -1,12 +1,14 @@
 use std::fs::File;
 
-use moonhare_engine::{game::{basic::world::World, nodes::window::Window, Game}, log};
-
+use moonhare_engine::{
+    game::{Game, basic::world::World, nodes::window::Window},
+    log,
+};
 
 fn main() {
     let _ = log::configere_logger();
     log::info("test");
-    
+
     let mut game = Game::new();
     let mut world = World::new();
 

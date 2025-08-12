@@ -2,21 +2,21 @@ use std::fmt::Error;
 
 use anymap::AnyMap;
 
-use crate::{Entity, ECS};
+use crate::{ECS, Entity};
 
 /// stores Entitys, Components and resources
-/// provides methods to search for specific Entitys 
+/// provides methods to search for specific Entitys
 #[derive(Debug)]
 pub struct World {
     ecs: ECS,
-    resources: AnyMap
+    resources: AnyMap,
 }
 
 impl World {
     pub fn new() -> Self {
-        Self { 
+        Self {
             ecs: ECS::new(),
-            resources: AnyMap::new(), 
+            resources: AnyMap::new(),
         }
     }
 }

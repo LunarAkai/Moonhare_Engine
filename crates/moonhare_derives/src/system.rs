@@ -4,7 +4,6 @@ use syn::DeriveInput;
 
 use crate::add_trait_bounds;
 
-
 pub fn system(input: DeriveInput) -> TokenStream {
     let name = input.ident;
 

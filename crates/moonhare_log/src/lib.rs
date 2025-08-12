@@ -2,16 +2,19 @@
 use std::{fmt::Display, io, time::SystemTime};
 
 /// Configures the Log Output Settings
-pub fn configere_logger() -> Result<(), fern::InitError>{
+pub fn configere_logger() -> Result<(), fern::InitError> {
     let base_config = fern::Dispatch::new().level(log::LevelFilter::Info);
-
 
     // configure colors for the whole line
     let colors_line = fern::colors::ColoredLevelConfig::new()
         .error(fern::colors::Color::Red)
         .warn(fern::colors::Color::Yellow)
         // we actually don't need to specify the color for debug and info, they are white by default
-        .info(fern::colors::Color::TrueColor { r: 85, g: 85, b: 85 })
+        .info(fern::colors::Color::TrueColor {
+            r: 85,
+            g: 85,
+            b: 85,
+        })
         .debug(fern::colors::Color::White)
         // depending on the terminals color scheme, this is the same as the background color
         .trace(fern::colors::Color::Black);
@@ -28,7 +31,6 @@ pub fn configere_logger() -> Result<(), fern::InitError>{
             ))
         })
         .chain(fern::log_file("moonhare_engine.log")?);
-
 
     let stdout_config = fern::Dispatch::new()
         .format(move |out, message, record| {
@@ -82,5 +84,3 @@ pub fn trace<T: Display>(arg: T) {
 pub fn error<T: Display>(arg: T) {
     log::error!("{}", arg);
 }
-
-

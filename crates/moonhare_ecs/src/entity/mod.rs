@@ -1,4 +1,7 @@
-use crate::{entity, generational_index::{GenerationalIndex, GenerationalIndexAllocator}};
+use crate::{
+    entity,
+    generational_index::{GenerationalIndex, GenerationalIndexAllocator},
+};
 
 #[derive(Debug, PartialEq, PartialOrd, Eq, Ord, Clone, Copy, Hash)]
 pub struct Entity(GenerationalIndex);
@@ -12,7 +15,6 @@ impl Entity {
         self.0.generation()
     }
 }
-
 
 #[derive(Debug, Clone)]
 pub struct EntityAllocator(GenerationalIndexAllocator);
