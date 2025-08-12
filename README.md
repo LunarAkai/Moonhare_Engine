@@ -37,11 +37,7 @@ So far these parts have been published:
 
 
 ### Game Loop:
-- Start Run
-            
-- (enter loop) ... -> WindowEvents/Input -> Update -> Render -> ...   
-
-- Cleanup   
+![](/docs/game_loop.drawio.png)
 
 
 
