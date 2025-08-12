@@ -21,8 +21,8 @@ So far these parts have been published:
 ## Architecture:
 
 ### Crates
-- [MoonhareECS](crates/moonhare_ecs/)
-    - Entity Component System
+- [MoonhareECS](crates/moonhare_ecs/) 
+    - Entity Component System, (still debating with me if I want a proper ECS or not, current system takes inspiration from it though)
 - [MoonhareEngine](moonhare_engine/)
 - [MoonhareEvent](crates/moonhare_event/)
 - [MoonhareGame](crates/moonhare_game/)
